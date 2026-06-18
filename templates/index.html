@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Content Discovery</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Instagram Content Discovery System</h1>
+        <p>Search and analyze Instagram posts</p>
+    </header>
+
+    <main>
+
+        <!-- Dataset Upload -->
+        <section class="card">
+            <h2>Upload Dataset</h2>
+
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="dataset" accept=".txt" required>
+                <button type="submit">Upload File</button>
+            </form>
+        </section>
+
+        <!-- Search Section -->
+        <section class="card">
+            <h2>Search Posts</h2>
+
+            <form action="/search" method="POST">
+
+                <input
+                    type="text"
+                    name="query"
+                    placeholder="Enter keyword, hashtag or creator"
+                    required
+                >
+
+                <button type="submit">Search</button>
+
+            </form>
+        </section>
+
+        <!-- Filters -->
+        <section class="card">
+            <h2>Filters</h2>
+
+            <select name="sort">
+                <option value="relevance">Relevance</option>
+                <option value="likes">Most Likes</option>
+                <option value="engagement">Highest Engagement</option>
+                <option value="recent">Most Recent</option>
+            </select>
+        </section>
+
+        <!-- Analytics Buttons -->
+        <section class="card">
+            <h2>Analytics</h2>
+
+            <button onclick="window.location.href='/trending'">
+                Trending Hashtags
+            </button>
+
+            <button onclick="window.location.href='/creators'">
+                Popular Creators
+            </button>
+
+            <button onclick="window.location.href='/statistics'">
+                Statistics
+            </button>
+        </section>
+
+    </main>
+
+</body>
+</html>
