@@ -1,47 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
-<h1>Search Results</h1>
+    <div class="container">
 
-{% if results %}
+        <h1>Search Results</h1>
 
-    {% for post in results %}
+        {% if results %}
 
-        <hr>
+        <table>
 
-        <p><strong>ID:</strong> {{ post.post_id }}</p>
+            <thead>
 
-        <p><strong>Creator:</strong> {{ post.creator }}</p>
+                <tr>
+                    <th>Post ID</th>
+                    <th>Creator</th>
+                    <th>Hashtags</th>
+                    <th>Caption</th>
+                    <th>Likes</th>
+                    <th>Comments</th>
+                    <th>Shares</th>
+                    <th>Engagement</th>
+                    <th>Date</th>
+                </tr>
 
-        <p><strong>Caption:</strong> {{ post.caption }}</p>
+            </thead>
 
-        <p><strong>Hashtags:</strong> {{ post.hashtags }}</p>
+            <tbody>
 
-        <p><strong>Likes:</strong> {{ post.likes }}</p>
+                {% for post in results %}
 
-        <p><strong>Comments:</strong> {{ post.comments }}</p>
+                <tr>
 
-        <p><strong>Shares:</strong> {{ post.shares }}</p>
+                    <td>{{ post.post_id }}</td>
 
-        <p><strong>Date:</strong> {{ post.date }}</p>
+                    <td>{{ post.creator }}</td>
 
-    {% endfor %}
+                    <td>{{ post.hashtags }}</td>
 
-{% else %}
+                    <td>{{ post.caption }}</td>
 
-    <h3>No matching posts found</h3>
+                    <td>{{ post.likes }}</td>
 
-{% endif %}
+                    <td>{{ post.comments }}</td>
 
-<br>
+                    <td>{{ post.shares }}</td>
 
-<a href="/">Back</a>
+                    <td>{{ post.engagement }}</td>
+
+                    <td>{{ post.date }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <h3>No Results Found</h3>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/">
+            <button>Back to Home</button>
+        </a>
+
+    </div>
 
 </body>
+
 </html>

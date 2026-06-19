@@ -4,7 +4,9 @@ def load_posts(filename):
 
     posts = []
 
-    with open(filename, "r") as file:
+    with open(filename, "r", encoding="utf-8") as file:
+
+        next(file)  # Skip header
 
         for line in file:
 

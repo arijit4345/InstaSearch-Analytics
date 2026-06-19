@@ -1,0 +1,201 @@
+post_id|creator_name|hashtags|caption|likes|comments|shares|date
+P001|wanderlust_vibes|#travel #explore #adventure #wanderlust #photography|Chasing sunsets at the edge of the world 🌅 Every journey begins with a single step. Where will you go next?|45230|1203|892|2024-11-15
+P002|fitlife_coach|#fitness #workout #gym #health #motivation|No days off when you love what you do 💪 5AM club checking in. Your body is your temple — treat it right.|32100|876|445|2024-11-18
+P003|foodie_paradise|#food #foodphotography #instafood #delicious #yummy|Homemade ramen that took 12 hours of love ❤️ Worth every minute. Recipe in bio!|61450|2341|1876|2024-11-10
+P004|techie_talks|#technology #AI #innovation #coding #future|The next wave of AI isn't coming — it's already here. Thread on what changes in 2025 👇|28900|934|2100|2024-11-20
+P005|nature_soul|#nature #wildlife #forest #earth #green|Found this hidden waterfall after a 3-hour hike 🌿 Some things are worth the effort.|55600|1789|3201|2024-11-08
+P006|urban_streets|#streetphotography #city #urban #blackandwhite #art|Cities have their own heartbeat. You just have to listen 🖤 Shot on a rainy Tuesday in NYC.|22300|567|234|2024-11-22
+P007|beauty_guru99|#beauty #makeup #skincare #glam #tutorial|Full glam in 10 minutes — yes, it's possible ✨ Linked every product used in my stories!|47800|1920|1103|2024-11-14
+P008|chef_marco|#cooking #recipe #italianfood #pasta #homecook|Nonna's secret cacio e pepe recipe finally revealed 🍝 Don't tell her I posted this.|39200|1456|2340|2024-11-17
+P009|surf_life|#surfing #ocean #waves #beach #lifestyle|The ocean doesn't care about your Monday mood 🌊 Paddle out anyway.|44100|1102|876|2024-11-09
+P010|minimalist_home|#homedecor #interior #minimalism #design #cozy|Less stuff, more life 🏠 Decluttered my entire apartment this weekend and it changed everything.|31700|889|765|2024-11-21
+P011|plant_mama|#plants #gardening #urbangarden #greenthumb #botany|My monstera just grew a new leaf and I'm unreasonably emotional about it 🌱|52300|2100|1456|2024-11-13
+P012|travel_couple|#couples #travel #love #adventure #wanderlust|Exploring Santorini together — some views are better when shared 💑|68900|3201|2890|2024-11-05
+P013|daily_yoga|#yoga #mindfulness #wellness #meditation #breathe|Morning flow to set the intention for the day 🧘 10 minutes is all you need.|29400|756|543|2024-11-19
+P014|street_eats|#streetfood #foodie #travel #culture #taste|This $2 taco in Mexico City changed my whole understanding of food 🌮|58700|2456|3100|2024-11-07
+P015|fashion_forward|#fashion #style #ootd #outfitoftheday #trendy|Quiet luxury isn't just an aesthetic — it's a lifestyle 👗 Full look linked below.|41200|1334|987|2024-11-16
+P016|coffee_culture|#coffee #coffeeshop #latte #barista #mornings|Art in a cup ☕ This barista spent 8 minutes on this pour. Tasted like heaven.|36500|1102|876|2024-11-11
+P017|hiking_trails|#hiking #mountains #outdoors #trek #nature|Summit at 5,000m — lungs burning, legs shaking, soul soaring ⛰️|49800|1678|2345|2024-11-06
+P018|digital_nomad|#remotework #nomad #laptop #freedom #travel|Working from a beach in Bali is still working. But wow, what an office 💻|37600|1230|1890|2024-11-23
+P019|bookworm_reads|#books #reading #booklover #literature #fiction|Just finished a book so good I immediately started it again 📚 Name it in comments!|24500|3456|1234|2024-11-18
+P020|pet_stories|#dogs #cats #pets #animals #cute|My dog learned to bring me coffee every morning ☕🐾 Training update in stories!|72300|4502|5678|2024-11-04
+P021|wellness_zone|#wellness #selfcare #mentalhealth #mindfulness #healing|Rest is not laziness. It's how you come back stronger 🌸 Take the break you deserve.|34100|1230|2100|2024-11-20
+P022|astro_photos|#astrophotography #space #stars #milkyway #cosmos|6 hours in a field to capture this Milky Way 🌌 Every cold minute was worth it.|63400|2345|4102|2024-11-03
+P023|retro_vibes|#vintage #retro #aesthetic #nostalgia #film|Found my grandma's Polaroid camera. These photos hit different 📷|29800|987|1102|2024-11-22
+P024|ocean_diver|#diving #underwater #ocean #marinelife #scuba|Met a sea turtle today and she was NOT impressed by me 🐢 Absolutely humbling.|55200|1890|2340|2024-11-09
+P025|comedy_daily|#funny #comedy #humor #memes #lol|POV: You said you'd sleep early and it's 3AM again 😂 Like if you can relate.|89100|5623|7890|2024-11-01
+P026|art_studio|#art #painting #illustration #creative #artist|Three weeks on this piece. Oil on canvas, 24x36. Titled: The Weight of Quiet.|38700|1456|876|2024-11-15
+P027|crypto_world|#crypto #bitcoin #blockchain #investing #finance|BTC at this level is a historical moment. Here's what the data says 📊|21300|2109|3456|2024-11-19
+P028|dance_life|#dance #hiphop #choreography #movement #music|When the beat drops and your body just knows what to do 🎵 Full video on YouTube!|46900|1678|2890|2024-11-12
+P029|mom_life_real|#momlife #parenting #kids #family #reallife|My toddler just explained quantum physics to me through snack choices 😂👶|64200|3890|4501|2024-11-08
+P030|music_vibes|#music #newmusic #playlist #hiphop #indie|This EP dropped at midnight and I haven't slept since 🎧 Pure art from start to finish.|33400|1102|2345|2024-11-21
+P031|vegan_kitchen|#vegan #plantbased #veganfood #healthyfood #cooking|Vegan lasagna so rich and cheesy, even meat-lovers asked for seconds 🧀🌿|42100|1567|2100|2024-11-14
+P032|travel_solo|#solotravel #adventure #backpacker #freedom #explore|Traveling alone taught me more about myself than any therapy session 🎒|51800|2234|3456|2024-11-07
+P033|sneaker_head|#sneakers #shoes #kicks #streetwear #hypebeast|The grail finally arrived. 3-year hunt, worth every second 👟🔥|47500|1890|1234|2024-11-16
+P034|meditation_life|#meditation #spirituality #peace #innerpeace #zen|The quieter you become, the more you hear 🕊️ 30-day meditation challenge — day 21.|27600|876|1102|2024-11-18
+P035|landscape_shots|#landscape #photography #sunset #goldenhour #nature|No filter. No edit. Just the sky doing what it does best 🌇|60300|2100|3890|2024-11-05
+P036|gaming_zone|#gaming #gamer #videogames #twitch #esports|Hit Diamond rank after 847 games. Character development arc complete 🎮|35600|2345|1678|2024-11-20
+P037|cocktail_lab|#cocktails #bartender #drinks #mixology #nightlife|Smoked rosemary negroni — this cocktail makes you feel things 🍹|28900|876|543|2024-11-22
+P038|architecture_eye|#architecture #buildings #design #urban #cityscape|This building is 140 years old and still the most beautiful in the city 🏛️|41200|1102|876|2024-11-13
+P039|baby_steps_fit|#weightloss #fitness #transformation #progress #health|Down 42lbs in 8 months. Sharing my full plan in stories 💪 You CAN do this.|58400|4501|6789|2024-11-02
+P040|crochet_magic|#crochet #knitting #handmade #diy #craft|Made this sweater in 2 weeks! Pattern available in bio 🧶❤️|31400|1456|2100|2024-11-17
+P041|city_explorer|#cityguide #travel #localguide #hidden #gems|5 spots in Tokyo that tourists always miss 🗼 Save this for your trip!|49300|1890|4502|2024-11-10
+P042|science_explain|#science #facts #learning #education #curiosity|Black holes don't suck — they warp space. Thread on why this matters 🔭|38200|2345|3890|2024-11-15
+P043|wedding_moments|#wedding #love #bride #photography #romance|The moment she saw him waiting at the altar 💍 This is why I love my job.|74600|3456|5678|2024-11-03
+P044|entrepreneur_talk|#entrepreneur #startup #business #hustle #success|3 years ago I had $200 and an idea. Here's what changed 💡 Thread below.|44800|2890|5100|2024-11-08
+P045|road_tripper|#roadtrip #car #travel #freedom #highway|America is best experienced at 70mph with good music and no agenda 🚗|36900|1234|1890|2024-11-19
+P046|sunset_chaser|#sunset #sky #colors #photography #goldenHour|I drove 3 hours for this sunset. Zero regrets 🧡|57800|2100|3100|2024-11-06
+P047|baking_dreams|#baking #cake #pastry #dessert #sweettooth|Croissants that took 3 days, 73 layers, and all my patience 🥐|43500|1678|2340|2024-11-14
+P048|finance_tips|#personalfinance #money #investing #savings #wealth|Here's how I saved $30K in 18 months on a regular salary 💰 Full breakdown in bio.|52100|3456|7890|2024-11-04
+P049|street_art|#streetart #graffiti #mural #urban #art|This mural appeared overnight and the neighborhood hasn't been the same since 🎨|32800|987|1456|2024-11-21
+P050|kids_activities|#parenting #kidsactivities #education #fun #family|50 screen-free activities for rainy days 🌧️ Save this for next weekend!|61200|4102|8901|2024-11-01
+P051|running_daily|#running #marathon #fitness #cardio #runner|Mile 18 of 26. Legs dead. Spirit unbreakable 🏃 Boston Marathon training log.|28400|987|1102|2024-11-20
+P052|film_nerd|#movies #cinema #filmreview #watchlist #screenwriting|This 1970s film predicted everything happening right now. Thread 🎬|24800|1890|3456|2024-11-18
+P053|coastal_life|#beach #ocean #coast #summer #sun|The beach doesn't ask questions 🌊 Packed my bag, drove 2 hours, needed this.|48600|1456|2100|2024-11-11
+P054|dark_academia|#darkacademia #aesthetic #books #poetry #vintage|Lit every candle, made strong tea, opened the oldest book on my shelf 📖🕯️|39400|1678|1890|2024-11-16
+P055|mindful_eating|#nutrition #healthyeating #mealprep #wellness #food|Sunday meal prep for the week 🥦 Eating well doesn't have to be complicated.|34700|1230|2345|2024-11-17
+P056|jazz_lounge|#jazz #music #livemusic #vinyl #soul|Vinyl crackle + jazz at midnight = the only therapy I need 🎷|21600|765|543|2024-11-22
+P057|space_nerd|#space #nasa #astronomy #universe #science|NASA just released this new image of Jupiter. Your Monday problems are irrelevant 🪐|71400|3890|6789|2024-11-02
+P058|pottery_studio|#pottery #ceramics #clay #handmade #art|The centering stage of pottery is basically life in metaphor 🏺|29700|1102|876|2024-11-19
+P059|skate_culture|#skateboarding #skate #tricks #street #lifestyle|Landed my first kickflip after 6 months of trying 🛹 The fall videos are in my archive.|42900|2100|1678|2024-11-13
+P060|tiny_homes|#tinyhome #minimalism #sustainable #homeliving #smallspace|Living in 200sqft. Everything I own has a purpose. Best decision I ever made 🏡|55800|3456|4890|2024-11-06
+P061|travel_africa|#africa #safari #wildlife #nature #adventure|Watched a cheetah hunt at sunrise in Kenya 🐆 Some things you can't un-see.|63100|2345|4502|2024-11-04
+P062|cocktail_hour|#drinks #cocktails #bartending #recipe #alcohol|The Aperol Spritz gets too much hate. Here's my upgraded version 🍊|27300|987|654|2024-11-21
+P063|mindset_coach|#mindset #growth #motivation #selfimprovement #coaching|You don't rise to your goals. You fall to your systems. Build the system 🧠|44600|2890|5678|2024-11-09
+P064|vintage_fashion|#vintagefashion #thrifting #sustainable #style #retro|Entire outfit: thrifted. Total cost: $24. Sustainability is stylish 🌿|38500|1678|2890|2024-11-15
+P065|wild_birds|#birdwatching #birds #nature #wildlife #photography|Spent 4 hours waiting for this kingfisher to land 🐦 Patience rewarded.|26900|876|1102|2024-11-20
+P066|startup_life|#startup #tech #founder #product #innovation|Just shipped our 1000th order 📦 What started in my garage 18 months ago...|51700|3102|4890|2024-11-07
+P067|pastry_chef|#pastry #dessert #french #patisserie #baking|French tarte au citron — precision and patience in every layer 🍋|36400|1456|1890|2024-11-14
+P068|social_impact|#nonprofit #charity #community #giveback #impact|1 year since we opened the community library. 3,000 kids now have access to books 📚|49200|4502|7890|2024-11-03
+P069|climbing_life|#climbing #rockclimbing #bouldering #outdoors #fitness|V7 send after 2 months of training 🧗 The process is the prize.|33800|1102|876|2024-11-18
+P070|food_science|#foodscience #cooking #chemistry #howto #learning|Why pasta water is liquid gold — the science explained 🍝|45600|2100|4502|2024-11-10
+P071|travel_japan|#japan #tokyo #culture #travel #asia|Japan doesn't just change how you travel — it changes how you see the world 🗾|67900|3890|5678|2024-11-02
+P072|luxury_travel|#luxurytravel #hotels #firstclass #travel #lifestyle|Stayed in an overwater bungalow in the Maldives. Here's an honest review 🏝️|58300|2345|3456|2024-11-08
+P073|guitar_lessons|#guitar #music #learning #acoustic #musician|Year 1 vs Year 3 of learning guitar 🎸 The progress will surprise you.|41800|2890|3890|2024-11-12
+P074|photography_tips|#photography #cameratips #photo #gear #howto|5 composition rules that instantly improve your photos 📷 Save this post!|53700|2100|5678|2024-11-06
+P075|pilates_life|#pilates #core #strength #wellness #fitness|100 Pilates sessions in. My body is a different machine now 🤸|32600|1230|1456|2024-11-17
+P076|comic_fan|#comics #marvel #anime #manga #geek|The best anime arcs, ranked by someone who takes this way too seriously 🗡️|29300|3102|2890|2024-11-20
+P077|mothernature|#environment #climatechange #sustainability #earth #ecology|The coral reef I photographed 10 years ago is unrecognizable. We must act 🌊|44700|2456|6789|2024-11-05
+P078|sewing_circle|#sewing #diy #fashion #handmade #crafts|Made my own blazer from scratch for $18 in fabric. The power of learning skills 🧵|37100|1890|3456|2024-11-15
+P079|travel_india|#india #travel #culture #spices #incredible|India will overwhelm all five senses simultaneously and you'll love every second 🇮🇳|56800|3100|4502|2024-11-07
+P080|boxing_daily|#boxing #martialarts #fitness #training #discipline|Every champion was once a beginner who refused to give up 🥊|40300|1678|2345|2024-11-16
+P081|sunrise_yoga|#yoga #sunrise #morning #peace #practice|Sun salutations as the sun actually rises 🌅 This is what the alarm was for.|31200|1102|1456|2024-11-19
+P082|travel_europe|#europe #paris #rome #travel #history|A 30-day solo trip across Europe changed who I am. Here's what I learned 🏰|64700|3456|5678|2024-11-01
+P083|ocean_cleanup|#oceanclean #environment #sustainability #beach #volunteer|Collected 200lbs of plastic from this beach. Help us at next month's cleanup 🌊|48900|3890|9012|2024-10-28
+P084|night_owl_photo|#nightphotography #longexposure #lightpainting #photo #dark|Light painting at 2AM. The city belongs to photographers after midnight 🌃|34200|1234|1890|2024-11-21
+P085|zero_waste|#zerowaste #sustainable #eco #greenlife #minimalism|My household produced only one jar of trash in 6 months. Here's how 🌿|46100|2890|6789|2024-11-09
+P086|food_travel|#foodtravel #taste #culture #street #world|Eating my way through Southeast Asia — one dish is all it takes to understand a culture 🍜|59400|2456|4102|2024-11-05
+P087|tattoo_art|#tattoo #ink #bodyart #tattooartist #design|Just finished this 14-hour sleeve piece. The trust clients give me is everything 🎨|38600|2100|2890|2024-11-14
+P088|mental_health_talk|#mentalhealth #therapy #anxiety #selfcare #awareness|It took me 6 years to finally ask for help. If this reaches one person: please go 💙|81200|7890|12300|2024-10-25
+P089|macro_photography|#macro #photography #insects #closeup #details|The world is incredible at 1:1 magnification 🔬 A bee's eye, up close.|29700|1102|1456|2024-11-18
+P090|leather_craft|#leatherwork #craft #handmade #artisan #DIY|Crafted this wallet by hand over 6 hours. Leather work is the most meditative hobby 👜|24500|876|654|2024-11-22
+P091|coffee_around|#coffeetravel #cafe #specialtycoffee #beans #barista|Ranked the top 10 specialty coffee cities in the world ☕ Controversial picks included.|36800|2345|3890|2024-11-11
+P092|travel_camping|#camping #outdoors #adventure #wilderness #tent|Woke up to elk grazing 10 feet from our tent 🦌 Yellowstone is something else.|52400|2100|3456|2024-11-06
+P093|body_positive|#bodypositivity #selflove #confidence #wellness #health|Your body carried you through everything. It deserves more grace from you 💛|69800|5678|9012|2024-10-26
+P094|architecture_modern|#modernarchitecture #design #building #urban #future|Zaha Hadid drew curves that no one thought were buildable. She built them anyway 🏗️|31500|1234|2100|2024-11-17
+P095|street_dance|#streetdance #freestyle #urban #hiphop #dance|This impromptu cypher broke out and I got it all on camera 🎵 Energy was electric.|43700|2456|3890|2024-11-10
+P096|slow_fashion|#slowfashion #ethical #sustainable #style #conscious|I haven't bought fast fashion in 2 years. Here's what my wardrobe looks like now 🌿|35900|1890|3102|2024-11-15
+P097|travel_newzealand|#newzealand #lotr #nature #adventure #landscape|New Zealand looks like a film set because it basically is 🧝 Hobbiton was real.|61300|2890|4502|2024-11-04
+P098|bbq_master|#bbq #grill #smokemeat #outdoor #food|18-hour brisket. That's it. That's the post 🥩🔥|47200|2100|3456|2024-11-12
+P099|interior_jungle|#houseplants #urbanjungle #indoorplants #plantdad #green|My apartment has 87 plants. My landlord thinks I'm the building's ecosystem 🌿|58700|3456|4890|2024-11-03
+P100|astrology_daily|#astrology #zodiac #horoscope #cosmos #spiritual|Mercury retrograde is over. You may now make good decisions again ♎|39800|4502|5678|2024-11-08
+P101|travel_thailand|#thailand #bangkok #islands #culture #travel|Thailand in 2 weeks: temples, islands, street food, life-changing conversations 🙏|57200|2890|4102|2024-11-07
+P102|fashion_diy|#diyfashion #upcycle #crafts #style #sustainable|Turned a $5 thrift store shirt into a statement piece. Tutorials in bio ✂️|33400|1678|2890|2024-11-16
+P103|cat_kingdom|#cats #catsofinstagram #meow #pets #cute|My cat has vetoed every WFH call this week 🐱 Morale is low.|77400|5678|8901|2024-10-24
+P104|travel_peru|#peru #macchupicchu #inca #hiking #southamerica|Machu Picchu at sunrise, no tourists. The alarm at 4AM was worth every second 🌄|65800|3456|5678|2024-10-27
+P105|cold_plunge|#coldplunge #icebath #wellness #health #mindset|Day 30 of cold plunges. I'm either healing or broken. Results to follow 🥶|41200|2890|4102|2024-11-09
+P106|travel_morocco|#morocco #marrakech #medina #souk #travel|Marrakech hit all my senses before I even left the airport 🇲🇦|52800|2345|3456|2024-11-05
+P107|watercolor_art|#watercolor #art #painting #illustration #creative|The way pigment bleeds is why I'll never fully control this medium 🎨 I've made peace with it.|27600|1102|1456|2024-11-20
+P108|endurance_run|#ultramarathon #trail #running #mountains #endurance|100 miles in 26 hours. My body is destroyed. My spirit has never been higher 🏔️|38900|3456|5678|2024-10-30
+P109|travel_vietnam|#vietnam #hanoi #hoi #pho #culture|The traffic in Hanoi will break you — then you'll miss it when you leave 🛵|49400|2100|3102|2024-11-08
+P110|guitar_journey|#guitarcover #acoustic #original #songwriting #music|Wrote and recorded this song after a really hard week. Sharing it feels vulnerable 🎸|34700|2890|3456|2024-11-13
+P111|travel_canada|#canada #banff #rockies #nature #adventure|Banff in winter looks like a screensaver, but you're actually inside it 🏔️❄️|58100|2456|4102|2024-11-04
+P112|self_portrait|#selfportrait #photography #art #conceptual #creative|6 months of self-portrait work, one image at a time. Here's what I noticed about myself 📷|31800|1678|2345|2024-11-17
+P113|nutrition_facts|#nutrition #health #eating #science #wellness|The one thing nutritionists agree on might surprise you 🥗 Full breakdown in thread.|42500|2890|5678|2024-11-10
+P114|abstract_art|#abstractart #contemporaryart #painting #gallery #artist|Expressionism lets me say what words can't. Three months of work in this canvas 🖌️|24700|1102|1234|2024-11-21
+P115|travel_iceland|#iceland #aurora #northernlights #winter #nature|Aurora borealis at 2AM and I cried. Some beauty bypasses logic 🌌|76300|4502|7890|2024-10-22
+P116|homegym_build|#homegym #fitness #workout #garage #gains|Built my home gym for $800. Tour in stories — you don't need a membership 💪|44100|2345|4502|2024-11-09
+P117|travel_greece|#greece #athens #islands #cyclades #mediterranean|The Greek islands feel like a reward for all the decisions you got right ☀️|62700|2890|4890|2024-11-01
+P118|tea_ceremony|#tea #ceremony #japanese #culture #mindfulness|The Japanese tea ceremony is 4 hours of intentional presence 🍵 Changed my perspective on time.|28300|1234|2100|2024-11-18
+P119|fermentation_lab|#fermentation #kombucha #kimchi #health #gutbiome|My kitchen is now officially a fermentation lab. SCOBY update: thriving 🫙|22800|987|1456|2024-11-22
+P120|parkour_life|#parkour #freerunning #urban #movement #fitness|The city is a gym if you know how to see it 🌆 Training montage now up.|37200|2100|2890|2024-11-12
+P121|travel_portugal|#portugal #lisbon #porto #culture #europe|Lisbon: fado music, pastel de nata, and cobblestone streets — one city, a million feelings 🇵🇹|53600|2456|3890|2024-11-06
+P122|ambient_music|#ambientmusic #soundscapes #music #electronic #chill|Made a 1-hour ambient album for focus and flow. Link in bio 🎧|19200|876|1678|2024-11-20
+P123|trail_biking|#mountainbike #mtb #trails #outdoor #cycling|This trail is rated double black diamond. I understand why now 🚵|39800|1678|2890|2024-11-11
+P124|travel_egypt|#egypt #pyramids #cairo #history #ancient|Standing at the base of the Great Pyramid, I felt very small and very lucky 🔺|61500|3102|5678|2024-10-29
+P125|animation_art|#animation #2d #art #creative #motion|6 seconds of animation = 40 hours of work. Leaving this here 📽️|32400|1890|3456|2024-11-14
+P126|travel_scotland|#scotland #highlands #castles #nature #uk|The Scottish Highlands have a kind of loneliness that doesn't feel lonely 🏴󠁧󠁢󠁳󠁣󠁴󠁿|47900|2345|4102|2024-11-07
+P127|financial_free|#financialfreedom #fire #frugal #investing #retire|I hit my FIRE number at 34. Here's exactly what I did, every step 💰|71800|7890|15000|2024-10-20
+P128|travel_turkey|#turkey #istanbul #culture #history #architecture|Istanbul is the only city that exists on two continents, in two worlds 🕌|56400|2890|4502|2024-11-03
+P129|flow_state|#flowarts #poi #fire #performance #movement|1 year of poi practice filmed every single day 🔥 The progression is real.|35100|1678|3102|2024-11-15
+P130|cloud_chaser|#clouds #weather #stormchasing #photography #nature|Chased this supercell for 200 miles. Weather photography is controlled madness ⛈️|43200|2100|4102|2024-11-08
+P131|travel_brazil|#brazil #riodejaneiro #carnival #beach #culture|Brazil is color, sound, and joy compressed into a continent 🇧🇷|58900|3102|5678|2024-11-01
+P132|film_photography|#filmphoto #35mm #analog #photography #darkroom|Shot my first roll of 35mm in 5 years. Film sees differently 📷|26700|1456|2100|2024-11-19
+P133|travel_spain|#spain #barcelona #madrid #food #culture|Spanish food culture deserves its own religion 🥘 Three weeks of eating well.|54100|2567|4102|2024-11-05
+P134|mindful_money|#budgeting #finance #debtfree #savings #frugal|Paid off $48K in student loans in 3 years. The spreadsheet that saved my life 📊|67200|5678|11234|2024-10-21
+P135|drone_shots|#drone #aerial #photography #landscape #sky|Perspective changes everything. Shot this at 400 feet on a cloudy morning 🚁|48700|2100|3890|2024-11-10
+P136|travel_australia|#australia #sydney #outback #wildlife #travel|Australia: where everything is beautiful and half of it will kill you 🦘|60200|3456|5678|2024-10-26
+P137|strength_journey|#powerlifting #strength #fitness #barbell #lifting|400lb deadlift after 2 years of training. Proof that consistency > intensity 🏋️|52300|4102|6789|2024-10-28
+P138|digital_art|#digitalart #illustration #procreate #art #creative|Started this piece as a sketch on my phone at 1AM 📱 Finished it 3 weeks later.|33900|1678|2345|2024-11-16
+P139|travel_colombia|#colombia #bogota #medellin #culture #southamerica|Colombia destroyed every stereotype I had before visiting 🇨🇴 Go.|49700|2890|5100|2024-11-04
+P140|river_kayak|#kayaking #whitewater #river #outdoors #adventure|Class IV rapids and absolutely nothing goes right — still the best Saturday of my life 🛶|37400|1890|3456|2024-11-13
+P141|travel_cuba|#cuba #havana #culture #music #history|Havana froze in 1959 and somehow became more alive for it 🇨🇺|55300|2890|4502|2024-11-06
+P142|interior_scandinavian|#scandinavian #nordic #homedecor #hygge #minimal|Hygge isn't a word, it's a temperature you set in your home 🕯️|40100|1890|3102|2024-11-15
+P143|travel_nepal|#nepal #kathmandu #himalaya #trek #basecamp|EBC trek done. Standing at 5,364m realising altitude makes philosophy easier 🏔️|63800|3456|6789|2024-10-23
+P144|knife_craft|#knife #blacksmith #metalwork #craft #handmade|Forged this knife from scratch over 3 days. Metal memory is a real thing 🔨|29400|1456|2345|2024-11-17
+P145|travel_mexico|#mexico #oaxaca #cdmx #culture #food|Mexico City is having a cultural renaissance that rivals Paris in the 1920s 🇲🇽|56700|3102|5678|2024-10-31
+P146|night_run|#nightrun #running #city #urban #cardio|Running the city at midnight when it's yours alone 🌙 5 miles of pure silence.|23800|987|1456|2024-11-21
+P147|travel_switzerland|#switzerland #alps #skiing #nature #europe|Woke up to clouds below me in the Swiss Alps ☁️ This doesn't happen at sea level.|59400|2890|5100|2024-11-02
+P148|origami_art|#origami #paper #art #japanese #fold|1200 folds, zero glue, pure geometry 📄 The tessellation took 4 weeks to master.|27100|1102|1890|2024-11-19
+P149|travel_netherlands|#netherlands #amsterdam #tulips #cycling #europe|Amsterdam works because everyone bikes. Urban planning is a love language 🚲|44600|2345|3890|2024-11-08
+P150|forest_bathing|#shinrinyoku #forest #nature #wellness #mindfulness|Spent 3 hours in the forest doing nothing in particular 🌲 Felt better than any meeting I've ever had.|36300|2100|4102|2024-11-12
+P151|travel_costa_rica|#costarica #jungle #wildlife #pura #nature|Woke up to howler monkeys at 5AM in the cloud forest 🐒 Better than any alarm clock.|51200|2456|4502|2024-11-05
+P152|photo_walk|#photowalk #documentary #street #community #life|One street. One hour. Twenty stories 📸 The world is always more interesting than you think.|32700|1456|2890|2024-11-16
+P153|travel_china|#china #beijing #greatwall #culture #history|Walked 15km of the Great Wall alone at dawn 🧱 History has a different weight when you're inside it.|60100|3102|5678|2024-10-25
+P154|piano_sessions|#piano #music #classical #practice #musician|Bach to basics — this piece has been humbling me for 6 months 🎹|24500|1234|1890|2024-11-20
+P155|travel_argentina|#argentina #buenosaires #patagonia #tango #culture|Patagonia is not a destination, it's an argument for being alive 🌬️|57600|2890|5100|2024-10-29
+P156|sport_climbing|#climbing #sportclimbing #outdoor #crags #fitness|Redpointed my first 5.13a 🧗 What a year of training actually looks like.|41700|2345|3456|2024-11-09
+P157|travel_kenya|#kenya #masai #wildlife #safari #africa|A lion walked within 3 feet of our jeep and looked bored by us 🦁 Correct.|66900|4102|7890|2024-10-22
+P158|bread_baking|#sourdough #bread #baking #fermentation #homecook|My sourdough starter is 2 years old. I name him Gerald. Gerald is thriving 🍞|50200|3456|5678|2024-11-03
+P159|travel_ireland|#ireland #dublin #cliffs #moher #celtic|The Cliffs of Moher in a storm — wind, spray, ancient drama 🌊🇮🇪|46800|2100|3890|2024-11-07
+P160|bike_commute|#cycling #commute #urban #eco #bike|Day 200 of cycling to work. I've lost 18lbs and found 40 minutes of peace daily 🚴|38900|2890|4890|2024-11-11
+P161|travel_indonesia|#indonesia #bali #java #culture #temple|The Borobudur sunrise ritual starts at 4AM and there's no debate about whether it's worth it 🌅|62300|3102|5678|2024-10-27
+P162|journaling_life|#journaling #writing #reflection #growth #words|3 years of daily journaling pages. The version of me on page 1 is a stranger 📓|35600|2456|4102|2024-11-14
+P163|travel_france|#france #paris #provence #wine #culture|Provence lavender fields in July are worth planning your entire life around 💜|58400|2890|5100|2024-10-30
+P164|strength_yoga|#yogastrength #handstand #inversions #practice #fitness|Handstand practice day 365. Proof that you can get upside down without a wall 🤸|43500|3102|5678|2024-11-06
+P165|travel_croatia|#croatia #dubrovnik #islands #adriatic #europe|Game of Thrones filmed here but Croatia's real story is better 🏰|50900|2567|4502|2024-11-02
+P166|comic_drawing|#comics #illustration #storytelling #panels #art|Chapter 3 of my webcomic is live. 200+ pages of a story I've been writing since 2019 📖|27800|2100|3890|2024-11-17
+P167|travel_norway|#norway #fjords #hiking #midnight #sun|Hiking at midnight in summer Norway when the sun doesn't set 🌞 Time becomes optional.|64200|3456|6789|2024-10-24
+P168|sourdough_pizza|#pizza #sourdough #homemade #cooking #italian|72-hour fermented dough, wood-fired oven, Neapolitan-style at home 🍕 This is the pizza era.|47300|2890|5100|2024-11-08
+P169|travel_taiwan|#taiwan #taipei #nightmarket #culture #food|The night market in Taipei is everything a street food lover dreams about 🫙|49800|2456|4102|2024-11-04
+P170|astrophysics_fan|#physics #astronomy #universe #math #science|Einstein's field equations describe spacetime. One hour with a whiteboard and we can walk through them 🔭|22400|1890|3456|2024-11-19
+P171|travel_sweden|#sweden #stockholm #nature #nordic #design|Swedish design isn't minimalism by accident — it's minimalism as philosophy 🪵|41600|2100|3890|2024-11-11
+P172|mushroom_forage|#foraging #mushrooms #nature #wild #food|Chanterelle season is here. Walked out with 4lbs and a philosophy 🍄|33700|2345|4502|2024-11-09
+P173|travel_myanmar|#myanmar #temples #buddhism #bagan #culture|1,000 temples at sunrise from a hot air balloon 🎈 Some sights reorder your priorities.|60700|3102|5678|2024-10-28
+P174|spoken_word|#poetry #spokenword #writing #creative #words|Performed this piece at an open mic last night. Shaking hands, cracked voice, didn't care 🎤|29300|2890|4890|2024-11-15
+P175|travel_austria|#austria #vienna #classical #mountains #europe|Mozart's Vienna and snowboard halfpipe Austria are the same country. Let that sink in 🎵⛷️|46100|2100|3890|2024-11-06
+P176|permaculture|#permaculture #gardening #sustainable #food #earth|Year 2 of our permaculture garden. We grew 70% of our food this summer 🥕|54200|4102|7890|2024-10-26
+P177|travel_cambodia|#cambodia #angkorwat #history #temple #asia|Angkor Wat was built in the 12th century. Modern minds still can't fully explain how 🛕|55800|2890|5100|2024-11-01
+P178|life_drawing|#lifedrawing #figure #art #sketch #anatomy|30-second gesture drawing: the most honest measure of how much you've improved 🖊️|21600|1102|1890|2024-11-20
+P179|travel_chile|#chile #patagonia #torres #hiking #mountains|Torres del Paine in a 70km/h wind. Every step was an argument and I won all of them 💨|57300|3102|5678|2024-10-31|
+P180|improv_comedy|#comedy #improv #theatre #performance #funny|Said yes to every improv scene last night. Strangest and best hour of my week 😂|32800|2456|4102|2024-11-13
+P181|travel_russia|#russia #stpetersburg #hermitage #architecture #history|The Hermitage has 3 million works. You'd need 11 years to see them all 🏛️|44900|2100|3890|2024-11-07
+P182|cold_brew|#coldbrew #coffee #homebrewing #mornings #caffeine|24-hour cold brew concentrate. Worth the patience. Always worth the patience ☕|26500|1234|2100|2024-11-21
+P183|travel_ukraine|#ukraine #kyiv #culture #resilience #history|Kyiv's spirit is unbreakable. The culture, the people, the determination 🇺🇦|51700|5678|12300|2024-10-27
+P184|freediving|#freediving #underwater #breath #ocean #apnea|3 minutes 40 seconds static apnea. The ocean gives you silence nothing else can 🌊|38400|2890|4890|2024-11-10
+P185|travel_jordan|#jordan #petra #desert #history #adventure|The Treasury appears around a corner and everything stops 🏜️ Petra earns every superlative.|61200|3456|6789|2024-10-23
+P186|hand_lettering|#lettering #calligraphy #typography #art #handmade|Spent 3 hours getting this one letter right. Worth it for the 0.5 seconds of satisfaction ✍️|24700|1456|2345|2024-11-19
+P187|travel_laos|#laos #mekong #vientiane #culture #slowtravel|Laos is everything you need and nothing you didn't ask for 🌿 Slow travel perfected.|43100|2100|3890|2024-11-08
+P188|glass_blowing|#glassblowing #craft #art #handmade #fire|Working with 2000°F molten glass for 2 minutes = 6 months of practice 🔥|31500|1890|3102|2024-11-14
+P189|travel_balkans|#balkans #montenegro #serbia #kotor #hidden|The Balkans are Europe's best-kept secret. Sharing it means I lose the secret 🏔️|49200|2890|5678|2024-11-02
+P190|data_viz|#dataviz #design #infographic #stats #visualization|Visualized 10 years of personal spending. The patterns are humbling 📊|37800|3456|6789|2024-11-06
+P191|travel_senegal|#senegal #dakar #africa #culture #music|Dakar has a heartbeat you feel in your chest 3 days before you arrive 🥁🇸🇳|47600|2890|5100|2024-10-31
+P192|record_collect|#vinyl #records #music #collection #hifi|Found a first pressing of Kind of Blue at a garage sale for $4. I didn't breathe for an hour 🎷|35200|3102|4890|2024-11-12
+P193|travel_usa|#usa #roadtrip #nationalparks #america #adventure|Hit all 63 national parks. A 4-year project, one tank of gas at a time 🏕️|68400|5678|11234|2024-10-18
+P194|voice_coach|#singing #voice #training #music #performance|Went from tone-deaf to performing at an open mic in 18 months 🎤 Anything is learnable.|42700|3456|6789|2024-11-05
+P195|travel_bolivia|#bolivia #uyuni #saltflats #southamerica #stunning|The Salar de Uyuni sky reflection is the closest thing to walking on clouds 🪞|66100|4102|8901|2024-10-20
+P196|code_journey|#coding #programming #tech #learning #developer|1 year of coding daily. My first project vs my current project 💻 The growth is wild.|54900|4890|9012|2024-10-19
+P197|travel_cambodia2|#cambodia #siem #reap #monks #culture|Sat with monks during morning alms in Siem Reap at 5AM 🧡 Stillness as a practice.|44300|2456|4502|2024-11-08
+P198|origami_complex|#origami #complex #paper #crease #advanced|This origami dragon has 427 crease patterns. Took 11 hours start to finish 🐉|29800|2100|4102|2024-11-15
+P199|travel_myanmar2|#myanmar #inle #lake #fishermen #culture|Inle Lake fishermen balance on one leg while rowing with the other. Beauty as function 🚣|52600|2890|5678|2024-11-03
+P200|farewell_travels|#travel #worldtravel #adventure #summary #reflection|200 countries, 1 passport, 12 years. What I know for certain: the world is good 🌍|94300|12345|23456|2024-10-01
