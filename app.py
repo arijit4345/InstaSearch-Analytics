@@ -3,6 +3,7 @@ from data_loader import load_posts
 from search import linear_search
 from sorting import merge_sort
 from analytics import trending_hashtags
+from creator_analytics import popular_creators
 
 from hashmap_search import (
     build_creator_index,
@@ -70,6 +71,16 @@ def trending():
     return render_template(
         "trending.html",
         trends=trends
+    )
+
+@app.route("/creators")
+def creators():
+
+    ranked_creators = popular_creators(posts)
+
+    return render_template(
+        "creators.html",
+        creators=ranked_creators
     )
 
 def search():
