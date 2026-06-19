@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Analysis</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>Performance Analysis</h1>
+
+<p>
+    Linear Search Time:
+    {{ result.linear_time }}
+</p>
+
+<p>
+    HashMap Search Time:
+    {{ result.hash_time }}
+</p>
+
+<canvas id="performanceChart"></canvas>
+
+<script>
+
+const ctx =
+document.getElementById(
+    'performanceChart'
+);
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [
+            'Linear Search',
+            'HashMap Search'
+        ],
+        datasets: [{
+            label: 'Execution Time',
+            data: [
+                Number("{{ result.linear_time }}"),
+                Number("{{ result.hash_time }}")
+            ],
+            backgroundColor: [
+                'red',
+                'green'
+            ]
+        }]
+    }
+});
+
+</script>
+
+<br>
+
+<a href="/">Back</a>
+
+</body>
+</html>

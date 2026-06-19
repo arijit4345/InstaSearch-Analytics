@@ -5,6 +5,7 @@ from sorting import merge_sort
 from analytics import trending_hashtags
 from creator_analytics import popular_creators
 from statistics import get_statistics
+from performance import compare_search
 import os
 
 from hashmap_search import (
@@ -137,6 +138,19 @@ def upload():
         return f"Dataset Loaded Successfully! Total Posts: {len(posts)}"
 
     return "Upload Failed"
+
+@app.route("/performance")
+def performance():
+
+    result = compare_search(
+        posts,
+        creator_index
+    )
+
+    return render_template(
+        "performance.html",
+        result=result
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
