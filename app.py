@@ -5,6 +5,7 @@ from sorting import merge_sort
 from analytics import trending_hashtags
 from creator_analytics import popular_creators
 from statistics import get_statistics
+import os
 
 from hashmap_search import (
     build_creator_index,
@@ -14,7 +15,11 @@ from hashmap_search import (
 )
 
 app = Flask(__name__)
+UPLOAD_FOLDER = "uploads"
 
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+posts = []
 posts = load_posts("dataset.txt")
 
 creator_index = build_creator_index(posts)
@@ -104,6 +109,34 @@ def search():
         "results.html",
         results=results
     )
+
+@app.route("/upload", methods=["POST"])
+def upload():
+
+    global posts
+    global creator_index
+    global hashtag_index
+
+    file = request.files["dataset"]
+
+    if file:
+
+        filepath = os.path.join(
+            app.config["UPLOAD_FOLDER"],
+            file.filename
+        )
+
+        file.save(filepath)
+
+        posts = load_posts(filepath)
+
+        creator_index = build_creator_index(posts)
+
+        hashtag_index = build_hashtag_index(posts)
+
+        return f"Dataset Loaded Successfully! Total Posts: {len(posts)}"
+
+    return "Upload Failed"
 
 if __name__ == "__main__":
     app.run(debug=True)
