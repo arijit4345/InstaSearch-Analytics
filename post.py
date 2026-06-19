@@ -12,4 +12,12 @@ class Post:
         self.likes = int(likes)
         self.comments = int(comments)
         self.shares = int(shares)
+
+        self.engagement = (
+        self.likes +
+        self.comments +
+        self.shares
+    )
+        
         self.date = date
+

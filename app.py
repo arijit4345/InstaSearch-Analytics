@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from data_loader import load_posts
 from search import linear_search
+from sorting import merge_sort
 
 from hashmap_search import (
     build_creator_index,
@@ -45,6 +46,19 @@ def search_hashtag(tag):
     return render_template(
         "results.html",
         results=results
+    )
+
+@app.route("/sort/<criteria>")
+def sort_posts(criteria):
+
+    sorted_posts = merge_sort(
+        posts,
+        criteria
+    )
+
+    return render_template(
+        "results.html",
+        results=sorted_posts
     )
 
 def search():
