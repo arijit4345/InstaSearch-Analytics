@@ -31,3 +31,16 @@ def merge(left, right, key):
     result.extend(right[j:])
 
     return result
+
+from datetime import datetime
+
+def sort_by_date(posts):
+
+    return sorted(
+        posts,
+        key=lambda post: datetime.strptime(
+            post.date,
+            "%Y-%m-%d"
+        ),
+        reverse=True
+    )

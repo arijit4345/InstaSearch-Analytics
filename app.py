@@ -6,6 +6,7 @@ from analytics import trending_hashtags
 from creator_analytics import popular_creators
 from statistics import get_statistics
 from performance import compare_search
+from sorting import merge_sort, sort_by_date
 import os
 
 from hashmap_search import (
@@ -150,6 +151,16 @@ def performance():
     return render_template(
         "performance.html",
         result=result
+    )
+
+@app.route("/recent")
+def recent_posts():
+
+    recent = sort_by_date(posts)
+
+    return render_template(
+        "results.html",
+        results=recent
     )
 
 if __name__ == "__main__":
