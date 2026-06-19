@@ -1,3 +1,4 @@
 # InstaSearch-Analytics
 Frontend and basic backend i.e basic full stack done with py flask
-<br>DAA Project
+DAA Project
+Dipan joined the project
