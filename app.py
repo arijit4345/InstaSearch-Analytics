@@ -4,6 +4,7 @@ from search import linear_search
 from sorting import merge_sort
 from analytics import trending_hashtags
 from creator_analytics import popular_creators
+from statistics import get_statistics
 
 from hashmap_search import (
     build_creator_index,
@@ -81,6 +82,16 @@ def creators():
     return render_template(
         "creators.html",
         creators=ranked_creators
+    )
+
+@app.route("/statistics")
+def statistics():
+
+    stats = get_statistics(posts)
+
+    return render_template(
+        "statistics.html",
+        stats=stats
     )
 
 def search():
