@@ -7,6 +7,7 @@ from creator_analytics import popular_creators
 from statistics import get_statistics
 from performance import compare_search
 from sorting import merge_sort, sort_by_date
+from relevance import relevance_search
 import os
 
 from hashmap_search import (
@@ -161,6 +162,19 @@ def recent_posts():
     return render_template(
         "results.html",
         results=recent
+    )
+
+@app.route("/relevance/<keyword>")
+def relevance(keyword):
+
+    results = relevance_search(
+        posts,
+        keyword
+    )
+
+    return render_template(
+        "results.html",
+        results=results
     )
 
 if __name__ == "__main__":
