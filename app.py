@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from data_loader import load_posts
 from search import linear_search
 from sorting import merge_sort
+from analytics import trending_hashtags
 
 from hashmap_search import (
     build_creator_index,
@@ -59,6 +60,16 @@ def sort_posts(criteria):
     return render_template(
         "results.html",
         results=sorted_posts
+    )
+
+@app.route("/trending")
+def trending():
+
+    trends = trending_hashtags(posts)
+
+    return render_template(
+        "trending.html",
+        trends=trends
     )
 
 def search():

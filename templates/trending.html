@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trending Hashtags</title>
+</head>
+<body>
+
+<h1>Trending Hashtags</h1>
+
+{% for tag, count in trends %}
+    <p>{{ tag }} : {{ count }}</p>
+{% endfor %}
+
+<a href="/">Back</a>
+
+</body>
+</html>
