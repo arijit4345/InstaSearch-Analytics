@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+
+<h1>Search Results</h1>
+
+{% if results %}
+
+    {% for post in results %}
+
+        <hr>
+
+        <p><strong>ID:</strong> {{ post.post_id }}</p>
+
+        <p><strong>Creator:</strong> {{ post.creator }}</p>
+
+        <p><strong>Caption:</strong> {{ post.caption }}</p>
+
+        <p><strong>Hashtags:</strong> {{ post.hashtags }}</p>
+
+        <p><strong>Likes:</strong> {{ post.likes }}</p>
+
+        <p><strong>Comments:</strong> {{ post.comments }}</p>
+
+        <p><strong>Shares:</strong> {{ post.shares }}</p>
+
+        <p><strong>Date:</strong> {{ post.date }}</p>
+
+    {% endfor %}
+
+{% else %}
+
+    <h3>No matching posts found</h3>
+
+{% endif %}
+
+<br>
+
+<a href="/">Back</a>
+
+</body>
+</html>
