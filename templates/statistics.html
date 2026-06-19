@@ -4,20 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistics Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>Statistics Dashboard</h1>
+    <h1>Statistics Dashboard</h1>
 
-<p>Total Posts: {{ stats.total_posts }}</p>
+    <p>Total Posts: {{ stats.total_posts }}</p>
+    <p>Total Creators: {{ stats.total_creators }}</p>
+    <p>Average Likes: {{ stats.avg_likes }}</p>
+    <p>Average Engagement: {{ stats.avg_engagement }}</p>
 
-<p>Total Creators: {{ stats.total_creators }}</p>
+    <canvas id="statsChart" width="400" height="200"></canvas>
 
-<p>Average Likes: {{ stats.avg_likes }}</p>
+    <script>
 
-<p>Average Engagement: {{ stats.avg_engagement }}</p>
+        const ctx = document.getElementById('statsChart');
 
-<a href="/">Back</a>
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Total Posts',
+                    'Total Creators',
+                    'Average Likes',
+                    'Average Engagement'
+                ],
+                datasets: [{
+                    label: 'Statistics',
+                    data: [
+                        Number("{{ stats.total_posts }}"),
+                        Number("{{ stats.total_creators }}"),
+                        Number("{{ stats.avg_likes }}"),
+                        Number("{{ stats.avg_engagement }}")
+                    ],
+                    backgroundColor: [
+                        '#4CAF50',
+                        '#2196F3',
+                        '#FF9800',
+                        '#E91E63'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+    </script>
+
+    <br>
+    <a href="/">Back</a>
 
 </body>
 </html>
