@@ -24,28 +24,6 @@
 
     <main>
       <div class="stat-grid">
-        <div class="stat-card c-coral">
-          <div class="stat-icon"></div>
-          <svg class="icon" viewBox="0 0 24 24">
-            <rect x="3.5" y="3.5" width="7" height="7" rx="1.4" />
-            <rect x="13.5" y="3.5" width="7" height="7" rx="1.4" />
-            <rect x="3.5" y="13.5" width="7" height="7" rx="1.4" />
-            <rect x="13.5" y="13.5" width="7" height="7" rx="1.4" />
-          </svg>
-          <div class="stat-label">Total posts</div>
-          <div class="stat-value">{{ stats.total_posts }}</div>
-        </div>
-
-        <div class="stat-card c-mint">
-          <div class="stat-icon"></div>
-          <svg class="icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3.4" />
-            <path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2" />
-          </svg>
-          <div class="stat-label">Total creators</div>
-          <div class="stat-value">{{ stats.total_creators }}</div>
-        </div>
-
         <div class="stat-card c-amber">
           <div class="stat-icon"></div>
           <svg class="icon" viewBox="0 0 24 24">
@@ -55,6 +33,26 @@
           </svg>
           <div class="stat-label">Average likes</div>
           <div class="stat-value">{{ stats.avg_likes }}</div>
+        </div>
+
+        <div class="stat-card c-mint">
+          <div class="stat-icon"></div>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <div class="stat-label">Average comments</div>
+          <div class="stat-value">{{ stats.avg_comments }}</div>
+        </div>
+
+        <div class="stat-card c-coral">
+          <div class="stat-icon"></div>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+            <polyline points="16 6 12 2 8 6" />
+            <line x1="12" y1="2" x2="12" y2="15" />
+          </svg>
+          <div class="stat-label">Average shares</div>
+          <div class="stat-value">{{ stats.avg_shares }}</div>
         </div>
 
         <div class="stat-card c-neutral">
@@ -87,7 +85,7 @@
         return {
           grid: dark ? "#2b3540" : "#d9e0dd",
           tick: dark ? "#93a0aa" : "#5c6670",
-          bars: ["#ff5a48", "#19a982", "#c97f12", dark ? "#8c98a3" : "#5c6670"],
+          bars: ["#c97f12", "#19a982", "#ff5a48", dark ? "#8c98a3" : "#5c6670"],
         };
       }
 
@@ -98,18 +96,18 @@
         type: "bar",
         data: {
           labels: [
-            "Total Posts",
-            "Total Creators",
             "Average Likes",
+            "Average Comments",
+            "Average Shares",
             "Average Engagement",
           ],
           datasets: [
             {
               label: "Statistics",
               data: [
-                Number("{{ stats.total_posts }}"),
-                Number("{{ stats.total_creators }}"),
                 Number("{{ stats.avg_likes }}"),
+                Number("{{ stats.avg_comments }}"),
+                Number("{{ stats.avg_shares }}"),
                 Number("{{ stats.avg_engagement }}"),
               ],
               backgroundColor: c.bars,

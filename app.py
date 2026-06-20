@@ -5,18 +5,10 @@ from sorting import merge_sort
 from analytics import trending_hashtags
 from creator_analytics import popular_creators
 from statistics import get_statistics
-from performance import compare_search
 from sorting import merge_sort, sort_by_date
 from relevance import relevance_search
 import os
 import math
-
-from hashmap_search import (
-    build_creator_index,
-    build_hashtag_index,
-    creator_search,
-    hashtag_search
-)
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
@@ -26,10 +18,6 @@ current_filename = "dataset.txt" # Tracks the default file on startup
 
 posts = []
 posts = load_posts("dataset.txt")
-
-creator_index = build_creator_index(posts)
-
-hashtag_index = build_hashtag_index(posts)
 
 @app.route("/")
 def home():
@@ -50,18 +38,6 @@ def get_paginated_list(results):
     end = start + per_page
 
     return results[start:end], page, total_pages, total_items
-
-@app.route("/creator/<name>")
-def search_creator(name):
-    results = creator_search(creator_index, name)
-    paginated, page, total_pages, total_items = get_paginated_list(results)
-    return render_template("results.html", results=paginated, page=page, total_pages=total_pages)
-
-@app.route("/hashtag/<tag>")
-def search_hashtag(tag):
-    results = hashtag_search(hashtag_index, tag)
-    paginated, page, total_pages, total_items = get_paginated_list(results)
-    return render_template("results.html", results=paginated, page=page, total_pages=total_pages)
 
 @app.route("/sort/<criteria>")
 def sort_posts(criteria):
@@ -112,7 +88,7 @@ def search():
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    global posts, creator_index, hashtag_index, current_filename # Add current_filename here
+    global posts, current_filename # Add current_filename here
 
     file = request.files["dataset"]
 
@@ -121,8 +97,6 @@ def upload():
         file.save(filepath)
         
         posts = load_posts(filepath)
-        creator_index = build_creator_index(posts)
-        hashtag_index = build_hashtag_index(posts)
         current_filename = file.filename # Save the name
 
         # Return JSON so the frontend can update the UI dynamically
@@ -136,28 +110,13 @@ def upload():
 
 @app.route("/delete", methods=["POST"])
 def delete_dataset():
-    global posts, creator_index, hashtag_index, current_filename
+    global posts, current_filename
 
     # Wipe everything from memory
     posts = []
-    creator_index = {}
-    hashtag_index = {}
     current_filename = None
 
     return jsonify({"message": "Dataset cleared."})
-
-@app.route("/performance")
-def performance():
-
-    result = compare_search(
-        posts,
-        creator_index
-    )
-
-    return render_template(
-        "performance.html",
-        result=result
-    )
 
 @app.route("/recent")
 def recent_posts():
