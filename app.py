@@ -102,6 +102,7 @@ def statistics():
         stats=stats
     )
 
+@app.route("/search", methods=["POST"])
 def search():
 
     keyword = request.form["query"]
