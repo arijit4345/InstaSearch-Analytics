@@ -43,9 +43,9 @@
             {% for post in results %}
             <tr>
               <td>{{ post.post_id }}</td>
-              <td>{{ post.creator }}</td>
-              <td class="hashtags">{{ post.hashtags }}</td>
-              <td>{{ post.caption }}</td>
+              <td class="selectable">{{ post.creator }}</td>
+              <td class="hashtags selectable">{{ post.hashtags }}</td>
+              <td class="selectable">{{ post.caption }}</td>
               <td>{{ post.likes }}</td>
               <td>{{ post.comments }}</td>
               <td>{{ post.shares }}</td>

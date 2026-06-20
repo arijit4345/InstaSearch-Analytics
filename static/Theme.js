@@ -303,4 +303,47 @@
         });
     });
   }
+
+ /* ---------- search validation logic ---------- */
+  var searchForm = document.getElementById("search-form");
+  var searchInput = document.getElementById("keyword-input");
+
+  if (searchForm && searchInput) {
+    searchForm.addEventListener("submit", function (e) {
+      
+      var keyword = searchInput.value.trim();
+
+      if (keyword === "") {
+        // Prevent the form from actually submitting
+        e.preventDefault();
+
+        // QUICK FIX: Find the submit button and instantly stop the spinner
+        var submitBtn = searchForm.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.classList.remove("is-loading");
+        }
+
+        // Reset animation
+        searchInput.classList.remove("is-error");
+        void searchInput.offsetWidth; 
+        
+        // Apply the red border and shake animation
+        searchInput.classList.add("is-error");
+        
+        // Clean up the class after the 400ms shake animation finishes
+        setTimeout(function() {
+          searchInput.classList.remove("is-error");
+        }, 400);
+      }
+    });
+  }
+
+  /* ---------- Handle Browser Back Button (bfcache) ---------- */
+  window.addEventListener("pageshow", function (event) {
+    // The 'persisted' property is true if the page was loaded from the browser's back/forward cache
+    if (event.persisted) {
+      // Force a hard reload from the server to reset all states and fetch fresh data
+      window.location.reload();
+    }
+  });
 })();

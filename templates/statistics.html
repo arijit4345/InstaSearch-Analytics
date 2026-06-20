@@ -118,10 +118,37 @@
         },
         options: {
           responsive: true,
-          plugins: { legend: { display: false } },
+          plugins: { 
+            legend: { display: false },
+            // Add a tooltip formatter so hovering shows exact, comma-separated numbers
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ' ' + Number(context.raw).toLocaleString();
+                }
+              }
+            }
+          },
           scales: {
-            x: { ticks: { color: c.tick }, grid: { display: false } },
-            y: { ticks: { color: c.tick }, grid: { color: c.grid } },
+            x: { 
+              ticks: { color: c.tick }, 
+              grid: { display: false } 
+            },
+            y: { 
+              type: 'logarithmic', // <-- This is the magic property
+              ticks: { 
+                color: c.tick,
+                // Force the axis labels to display as normal numbers instead of scientific notation
+                callback: function(value, index, values) {
+                  var remain = value / (Math.pow(10, Math.floor(Math.log10(value))));
+                  if (remain === 1 || remain === 2 || remain === 5) {
+                    return Number(value.toString()).toLocaleString();
+                  }
+                  return '';
+                }
+              }, 
+              grid: { color: c.grid } 
+            },
           },
         },
       });

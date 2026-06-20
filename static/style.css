@@ -148,15 +148,22 @@ a {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 100; /* Bumped up to always beat the cards below */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
   padding: 14px 5%;
   background: var(--scrim);
-  backdrop-filter: blur(10px);
+  
+  /* Increased the blur for a stronger frosted glass effect */
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  
   border-bottom: 1px solid var(--border);
+  
+  /* Added a soft, fading shadow to create that horizon blur effect */
+  box-shadow: 0 4px 24px -6px var(--shadow);
 }
 
 .brand {
@@ -699,8 +706,12 @@ button.ghost:hover {
 .spinner {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #fff;
+  /* Use a neutral, faint track that works on both dark and light backgrounds */
+  border: 2px solid rgba(150, 150, 150, 0.3);
+  
+  /* currentColor automatically forces the spinner to match the button's text color! */
+  border-top-color: currentColor;
+  
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   display: none;
@@ -1271,16 +1282,17 @@ a.page-btn.disabled {
    UI/UX Enhancements
    --------------------------------------------------------------------- */
 
-/* Prevent accidental text selection on structural UI elements */
-h1, h2, h3, .eyebrow, button, .btn, .topbar, .tile, .file-label, .dropzone, th, .stat-label, .page-btn {
+/* 1. Lock down the entire website by default */
+body {
   -webkit-user-select: none;
   user-select: none;
 }
 
-/* Ensure data is still selectable so users can copy/paste it */
-td, .data-row, .page-head p, input {
+/* 2. ONLY unlock specific data and the search input box */
+input, .selectable {
   -webkit-user-select: text;
   user-select: text;
+  cursor: text; /* Show the text cursor when hovering over copyable data */
 }
 
 /* Dim the "Select Filter" placeholder text */
@@ -1299,6 +1311,31 @@ select.is-error {
   border-color: var(--coral) !important;
   color: var(--coral);
   animation: shake 0.4s ease-in-out;
+}
+
+/* ---------------------------------------------------------------------
+   Custom Text Selection Color
+   --------------------------------------------------------------------- */
+::selection {
+  background: var(--coral);
+  color: #ffffff; /* Forces the highlighted text to be white for contrast */
+}
+
+/* For full browser compatibility (Firefox) */
+::-moz-selection {
+  background: var(--coral);
+  color: #ffffff;
+}
+
+/* Optional: You can make the search input use the softer mint color 
+   so it visually separates from the data table selection */
+input::selection {
+  background: var(--mint);
+  color: #ffffff;
+}
+input::-moz-selection {
+  background: var(--mint);
+  color: #ffffff;
 }
 
 /* ---------------------------------------------------------------------
@@ -1452,3 +1489,17 @@ button.delete-btn:hover {
 .container .card:nth-of-type(2) { z-index: 30; }
 .container .card:nth-of-type(3) { z-index: 20; } /* Filter card */
 .container .card:nth-of-type(4) { z-index: 10; } /* Analytics card */
+
+/* Input Error State */
+input[type="text"].is-error {
+  border-color: var(--coral) !important;
+  color: var(--coral);
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Changed from var(--coral-soft) to solid coral so it is perfectly readable */
+input[type="text"].is-error::placeholder {
+  color: var(--coral);
+  opacity: 1; 
+}
+

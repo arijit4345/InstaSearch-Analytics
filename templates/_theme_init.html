@@ -1,12 +1,12 @@
 <script>
   (function () {
     try {
+      // Check if they previously saved a theme preference
       var saved = localStorage.getItem("pulse-index-theme");
-      var theme =
-        saved ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light");
+      
+      // If not, explicitly default to "light" instead of checking OS settings
+      var theme = saved || "light";
+      
       document.documentElement.setAttribute("data-theme", theme);
     } catch (e) {}
   })();

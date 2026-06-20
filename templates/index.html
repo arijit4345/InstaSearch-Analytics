@@ -251,10 +251,8 @@
           Search Posts
         </h2>
 
-        <form action="/search" method="GET">
-          <label class="sr-only" for="keyword-input"
-            >Enter keyword, hashtag or creator</label
-          >
+        <form id="search-form" action="/search" method="GET" novalidate>
+          <label class="sr-only" for="keyword-input">Enter keyword, hashtag or creator</label>
           <div class="field">
             <input
               type="text"
@@ -266,12 +264,7 @@
           </div>
           <button type="submit">
             <span class="spinner" aria-hidden="true"></span>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              style="stroke: var(--on-accent)"
-              aria-hidden="true"
-            >
+            <svg class="icon" viewBox="0 0 24 24" style="stroke: var(--on-accent)" aria-hidden="true">
               <circle cx="10" cy="10" r="6.2" />
               <line x1="20" y1="20" x2="14.6" y2="14.6" />
             </svg>
