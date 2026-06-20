@@ -1,18 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<html>
-<head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trending Hashtags</title>
-</head>
-<body>
+    {% include '_theme_init.html' %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    {% include '_topbar.html' %}
 
-<h1>Trending Hashtags</h1>
+    <div class="page-head">
+      <span class="eyebrow">ranked by frequency</span>
+      <h1>Trending Hashtags</h1>
+      <p>
+        Tags pulled from the active dataset, ordered by how often they show up.
+      </p>
+    </div>
 
-{% for tag, count in trends %}
-    <p>{{ tag }} : {{ count }}</p>
-{% endfor %}
+    <main>
+      {% if trends %}
+      <div class="data-list">
+        {% for tag, count in trends %}
+        <div class="data-row">
+          <span class="data-label">
+            <span class="data-rank">{{ (page - 1) * 15 + loop.index }}</span>
+            {{ tag }}
+          </span>
+          <span class="data-value">
+            <svg class="icon" viewBox="0 0 24 24">
+              <polyline points="3,17 9,11 13,15 21,7" />
+              <polyline points="21,7 21,13" />
+              <polyline points="21,7 15,7" />
+            </svg>
+            {{ count }}
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <circle
+            cx="50"
+            cy="50"
+            r="28"
+            class="stroke-muted fill-none"
+            stroke-width="2"
+            stroke-dasharray="3 6"
+          />
+          <line
+            x1="70"
+            y1="70"
+            x2="92"
+            y2="92"
+            class="stroke-muted"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <line
+            x1="40"
+            y1="50"
+            x2="60"
+            y2="50"
+            class="stroke-coral"
+            stroke-width="2.4"
+            stroke-linecap="round"
+          />
+        </svg>
+        <h3>No hashtags yet</h3>
+        <p>Upload a dataset from the home page to see trending tags here.</p>
+      </div>
+      {% endif %}
 
-<a href="/">Back</a>
+      {% if total_pages > 1 %}
+      <div class="pagination">
 
-</body>
+        {% set qs = [] %}
+        {% for key, value in request.args.items() %}
+          {% if key != 'page' %}
+            {% set _ = qs.append(key ~ '=' ~ value) %}
+          {% endif %}
+        {% endfor %}
+        {% set extra_args = ('&' ~ qs|join('&')) if qs else '' %}
+
+        {% set start = page - 2 %}
+        {% set end = page + 2 %}
+        
+        {% if start < 1 %}
+          {% set end = end + (1 - start) %}
+          {% set start = 1 %}
+        {% endif %}
+        
+        {% if end > total_pages %}
+          {% set start = start - (end - total_pages) %}
+          {% set end = total_pages %}
+          {% if start < 1 %}
+             {% set start = 1 %}
+          {% endif %}
+        {% endif %}
+
+        <a class="page-btn icon-only {% if page == 1 %}disabled{% endif %}" 
+           {% if page != 1 %}href="{{ request.path }}?page=1{{ extra_args }}"{% endif %} title="First Page">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="11 17 6 12 11 7"/>
+            <polyline points="18 17 13 12 18 7"/>
+          </svg>
+        </a>
+
+        <a class="page-btn icon-only {% if page == 1 %}disabled{% endif %}" 
+           {% if page != 1 %}href="{{ request.path }}?page={{ page - 1 }}{{ extra_args }}"{% endif %} title="Previous Page">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </a>
+
+        {% for p in range(start, end + 1) %}
+          {% if p == page %}
+            <span class="page-btn active">{{ p }}</span>
+          {% else %}
+            <a class="page-btn" href="{{ request.path }}?page={{ p }}{{ extra_args }}">{{ p }}</a>
+          {% endif %}
+        {% endfor %}
+
+        <a class="page-btn icon-only {% if page == total_pages %}disabled{% endif %}" 
+           {% if page != total_pages %}href="{{ request.path }}?page={{ page + 1 }}{{ extra_args }}"{% endif %} title="Next Page">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </a>
+
+        <a class="page-btn icon-only {% if page == total_pages %}disabled{% endif %}" 
+           {% if page != total_pages %}href="{{ request.path }}?page={{ total_pages }}{{ extra_args }}"{% endif %} title="Last Page">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="13 17 18 12 13 7"/>
+            <polyline points="6 17 11 12 6 7"/>
+          </svg>
+        </a>
+
+      </div>
+      {% endif %}
+
+      <a class="back-link" href="/">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="11,6 5,12 11,18" />
+        </svg>
+        Back to home
+      </a>
+    </main>
+
+    <script src="{{ url_for('static', filename='theme.js') }}" defer></script>
+  </body>
 </html>

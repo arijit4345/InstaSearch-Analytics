@@ -1,61 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Statistics Dashboard</title>
-
+    {% include '_theme_init.html' %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+  </head>
+  <body>
+    {% include '_topbar.html' %}
 
-    <h1>Statistics Dashboard</h1>
+    <div class="page-head">
+      <span class="eyebrow">dataset overview</span>
+      <h1>Statistics Dashboard</h1>
+      <p>
+        A snapshot of the active dataset — volume, reach and how people respond.
+      </p>
+    </div>
 
-    <p>Total Posts: {{ stats.total_posts }}</p>
-    <p>Total Creators: {{ stats.total_creators }}</p>
-    <p>Average Likes: {{ stats.avg_likes }}</p>
-    <p>Average Engagement: {{ stats.avg_engagement }}</p>
+    <main>
+      <div class="stat-grid">
+        <div class="stat-card c-coral">
+          <div class="stat-icon"></div>
+          <svg class="icon" viewBox="0 0 24 24">
+            <rect x="3.5" y="3.5" width="7" height="7" rx="1.4" />
+            <rect x="13.5" y="3.5" width="7" height="7" rx="1.4" />
+            <rect x="3.5" y="13.5" width="7" height="7" rx="1.4" />
+            <rect x="13.5" y="13.5" width="7" height="7" rx="1.4" />
+          </svg>
+          <div class="stat-label">Total posts</div>
+          <div class="stat-value">{{ stats.total_posts }}</div>
+        </div>
 
-    <canvas id="statsChart" width="400" height="200"></canvas>
+        <div class="stat-card c-mint">
+          <div class="stat-icon"></div>
+          <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="3.4" />
+            <path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2" />
+          </svg>
+          <div class="stat-label">Total creators</div>
+          <div class="stat-value">{{ stats.total_creators }}</div>
+        </div>
+
+        <div class="stat-card c-amber">
+          <div class="stat-icon"></div>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path
+              d="M12 20s-7.6-4.6-9.6-9.4C1 7 3 4 6.4 4c2 0 3.7 1.2 4.6 2.8C11.9 5.2 13.6 4 15.6 4 19 4 21 7 19.6 10.6 17.6 15.4 12 20 12 20Z"
+            />
+          </svg>
+          <div class="stat-label">Average likes</div>
+          <div class="stat-value">{{ stats.avg_likes }}</div>
+        </div>
+
+        <div class="stat-card c-neutral">
+          <div class="stat-icon"></div>
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="2,12 6,12 9,4 13,20 16,12 22,12" />
+          </svg>
+          <div class="stat-label">Average engagement</div>
+          <div class="stat-value">{{ stats.avg_engagement }}</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <canvas id="statsChart" height="110"></canvas>
+      </div>
+
+      <a class="back-link" href="/">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="11,6 5,12 11,18" />
+        </svg>
+        Back to home
+      </a>
+    </main>
 
     <script>
+      function chartColors() {
+        var dark =
+          document.documentElement.getAttribute("data-theme") === "dark";
+        return {
+          grid: dark ? "#2b3540" : "#d9e0dd",
+          tick: dark ? "#93a0aa" : "#5c6670",
+          bars: ["#ff5a48", "#19a982", "#c97f12", dark ? "#8c98a3" : "#5c6670"],
+        };
+      }
 
-        const ctx = document.getElementById('statsChart');
+      var c = chartColors();
+      var ctx = document.getElementById("statsChart");
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [
-                    'Total Posts',
-                    'Total Creators',
-                    'Average Likes',
-                    'Average Engagement'
-                ],
-                datasets: [{
-                    label: 'Statistics',
-                    data: [
-                        Number("{{ stats.total_posts }}"),
-                        Number("{{ stats.total_creators }}"),
-                        Number("{{ stats.avg_likes }}"),
-                        Number("{{ stats.avg_engagement }}")
-                    ],
-                    backgroundColor: [
-                        '#4CAF50',
-                        '#2196F3',
-                        '#FF9800',
-                        '#E91E63'
-                    ]
-                }]
+      var statsChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: [
+            "Total Posts",
+            "Total Creators",
+            "Average Likes",
+            "Average Engagement",
+          ],
+          datasets: [
+            {
+              label: "Statistics",
+              data: [
+                Number("{{ stats.total_posts }}"),
+                Number("{{ stats.total_creators }}"),
+                Number("{{ stats.avg_likes }}"),
+                Number("{{ stats.avg_engagement }}"),
+              ],
+              backgroundColor: c.bars,
+              borderRadius: 6,
+              maxBarThickness: 56,
             },
-            options: {
-                responsive: true
-            }
-        });
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: c.tick }, grid: { display: false } },
+            y: { ticks: { color: c.tick }, grid: { color: c.grid } },
+          },
+        },
+      });
 
+      window.addEventListener("pulse-theme-change", function () {
+        var nc = chartColors();
+        statsChart.data.datasets[0].backgroundColor = nc.bars;
+        statsChart.options.scales.x.ticks.color = nc.tick;
+        statsChart.options.scales.y.ticks.color = nc.tick;
+        statsChart.options.scales.y.grid.color = nc.grid;
+        statsChart.update();
+      });
     </script>
 
-    <br>
-    <a href="/">Back</a>
-
-</body>
+    <script src="{{ url_for('static', filename='theme.js') }}" defer></script>
+  </body>
 </html>

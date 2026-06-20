@@ -1,162 +1,394 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instagram Content Discovery</title>
+    {% include '_theme_init.html' %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    {% include '_topbar.html' %}
 
-<body>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">live dataset scan</span>
+        <h1
+          style="
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 2.9rem);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+          "
+        >
+          Instagram Content<br />Discovery System
+        </h1>
+        <p
+          style="
+            margin-top: 14px;
+            color: var(--text-muted);
+            max-width: 46ch;
+            font-size: 1rem;
+          "
+        >
+          Upload a dataset, search by keyword, creator or hashtag, and read back
+          likes, comments, shares and engagement — ranked the way you want it.
+        </p>
+      </div>
+
+      <svg
+        class="hero-art"
+        viewBox="0 0 480 360"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-hidden="true"
+      >
+        <g class="spin-slow">
+          <circle
+            cx="240"
+            cy="180"
+            r="148"
+            class="stroke-border fill-none"
+            stroke-width="1.2"
+            stroke-dasharray="3 8"
+          />
+        </g>
+
+        <rect
+          x="150"
+          y="55"
+          width="180"
+          height="250"
+          rx="22"
+          class="stroke-muted fill-surface"
+          stroke-width="1.6"
+        />
+
+        <g class="fill-border">
+          <circle cx="172" cy="80" r="2.2" />
+          <circle cx="186" cy="80" r="2.2" />
+          <circle cx="200" cy="80" r="2.2" />
+          <circle cx="172" cy="92" r="2.2" />
+          <circle cx="186" cy="92" r="2.2" />
+          <circle cx="200" cy="92" r="2.2" />
+        </g>
+
+        <path
+          class="stroke-coral fill-none pulse-draw"
+          stroke-width="2.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M168 220 L195 220 L210 155 L235 270 L255 195 L312 195"
+        />
+
+        <g class="float-b">
+          <circle
+            cx="116"
+            cy="290"
+            r="20"
+            class="stroke-mint fill-none"
+            stroke-width="3"
+          />
+          <line
+            x1="131"
+            y1="305"
+            x2="148"
+            y2="322"
+            class="stroke-mint"
+            stroke-width="3.4"
+            stroke-linecap="round"
+          />
+        </g>
+
+        <g class="float-a">
+          <rect
+            x="36"
+            y="86"
+            width="98"
+            height="32"
+            rx="16"
+            class="fill-surface stroke-border"
+            stroke-width="1.2"
+          />
+          <text
+            x="58"
+            y="107"
+            font-family="JetBrains Mono, monospace"
+            font-size="12"
+            class="fill-text"
+          >
+            #travel
+          </text>
+          <circle cx="48" cy="102" r="3" class="fill-coral" />
+        </g>
+
+        <g class="float-b">
+          <rect
+            x="324"
+            y="244"
+            width="112"
+            height="32"
+            rx="16"
+            class="fill-surface stroke-border"
+            stroke-width="1.2"
+          />
+          <text
+            x="340"
+            y="265"
+            font-family="JetBrains Mono, monospace"
+            font-size="12"
+            class="fill-text"
+          >
+            @creator
+          </text>
+        </g>
+
+        <g class="float-a">
+          <rect
+            x="312"
+            y="62"
+            width="92"
+            height="30"
+            rx="15"
+            class="fill-surface stroke-border"
+            stroke-width="1.2"
+          />
+          <text
+            x="328"
+            y="82"
+            font-family="JetBrains Mono, monospace"
+            font-size="12"
+            class="fill-mint"
+          >
+            ♥ 2.4k
+          </text>
+        </g>
+      </svg>
+    </section>
 
     <div class="container">
+      <!-- Upload Dataset -->
+      <div class="card">
+        <h2>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v9" />
+            <path d="M7 8l5-5 5 5" />
+            <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
+          </svg>
+          Upload Dataset
+        </h2>
 
-        <h1>Instagram Content Discovery System</h1>
+        <form
+          id="upload-form"
+          action="/upload"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label class="sr-only" for="dataset-input"
+            >Choose a dataset file to upload (.txt)</label
+          >
 
-        <!-- Upload Dataset -->
+          <div class="dropzone" id="dataset-dropzone">
+            <svg class="icon drop-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4v9" />
+              <path d="M7 8l5-5 5 5" />
+              <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
+            </svg>
+            <p class="drop-text">
+              Drag & drop your <strong>.txt</strong> dataset here, or
+            </p>
+            <label class="file-label" for="dataset-input">
+              Browse Files
+              <input
+                type="file"
+                id="dataset-input"
+                name="dataset"
+                accept=".txt"
+                required
+              />
+            </label>
+            <span class="file-name"></span>
+          </div>
+        </form>
 
-        <div class="card">
-
-            <h2>Upload Dataset</h2>
-
-            <form action="/upload"
-                  method="POST"
-                  enctype="multipart/form-data">
-
-                <input type="file"
-                       name="dataset"
-                       accept=".txt"
-                       required>
-
-                <button type="submit">
-                    Upload File
-                </button>
-
-            </form>
-
-        </div>
-
-        <!-- Search -->
-
-        <div class="card">
-
-            <h2>Search Posts</h2>
-
-            <form action="/search"
-                  method="POST">
-
-                <input type="text"
-                       name="keyword"
-                       placeholder="Enter keyword, hashtag, creator..."
-                       required>
-
-                <button type="submit">
-                    Search
-                </button>
-
-            </form>
-
-        </div>
-
-        <!-- Filters -->
-
-        <div class="card">
-
-            <h2>Filter Posts</h2>
-
-            <select id="filterSelect">
-
-                <option value="">
-                    Select Filter
-                </option>
-
-                <option value="/sort/likes">
-                    Popularity (Likes)
-                </option>
-
-                <option value="/sort/engagement">
-                    Engagement
-                </option>
-
-                <option value="/recent">
-                    Recent Posts
-                </option>
-
-            </select>
-
-            <button type="button"
-                    onclick="goToFilter()">
-                See Posts
-            </button>
-
-        </div>
-
-        <!-- Quick Access -->
-
-        <div class="card">
-
-            <h2>Analytics Dashboard</h2>
-
-            <div class="nav-buttons">
-
-                <a href="/trending">
-                    <button>
-                        Trending Hashtags
-                    </button>
-                </a>
-
-                <a href="/creators">
-                    <button>
-                        Popular Creators
-                    </button>
-                </a>
-
-                <a href="/statistics">
-                    <button>
-                        Statistics Dashboard
-                    </button>
-                </a>
-
-                <a href="/performance">
-                    <button>
-                        Performance Analysis
-                    </button>
-                </a>
-
+        <div id="active-dataset-card" class="dataset-status" {% if not current_file %}style="display: none;"{% endif %}>
+          <div class="status-info">
+            <span class="eyebrow">Active Dataset</span>
+            <div class="status-details">
+              <svg class="icon stroke-mint" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span id="current-filename">{{ current_file }}</span>
+              <span id="current-count" class="tag-pill">{{ record_count }} posts</span>
             </div>
-
+          </div>
+          
+          <button type="button" id="delete-dataset-btn" class="btn ghost delete-btn">
+            <span class="spinner" aria-hidden="true"></span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span class="btn-label">Remove</span>
+          </button>
         </div>
 
+      </div>
+
+      <!-- Search -->
+      <div class="card">
+        <h2>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10" cy="10" r="6.2" />
+            <line x1="20" y1="20" x2="14.6" y2="14.6" />
+          </svg>
+          Search Posts
+        </h2>
+
+        <form action="/search" method="GET">
+          <label class="sr-only" for="keyword-input"
+            >Enter keyword, hashtag or creator</label
+          >
+          <div class="field">
+            <input
+              type="text"
+              id="keyword-input"
+              name="keyword"
+              placeholder="Enter keyword, hashtag, creator..."
+              required
+            />
+          </div>
+          <button type="submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              style="stroke: var(--on-accent)"
+              aria-hidden="true"
+            >
+              <circle cx="10" cy="10" r="6.2" />
+              <line x1="20" y1="20" x2="14.6" y2="14.6" />
+            </svg>
+            <span class="btn-label">Search</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Filters -->
+      <div class="card">
+        <h2>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="18" x2="14" y2="18" />
+          </svg>
+          Filter Posts
+        </h2>
+
+        <label class="sr-only" for="filterSelect"
+          >Choose a filter for posts</label
+        >
+
+        <div class="custom-select" id="custom-filter-wrapper">
+          <div class="select-trigger">
+            <span class="select-label">Select Filter</span>
+            <svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          
+          <div class="select-options">
+            <div class="option" data-value="/sort/likes">Popularity (Likes)</div>
+            <div class="option" data-value="/sort/engagement">Engagement</div>
+            <div class="option" data-value="/recent">Recent Posts</div>
+          </div>
+        </div>
+        
+        <input type="hidden" id="filterSelect" value="" />
+
+        <button type="button" id="filter-btn">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            style="stroke: var(--on-accent)"
+            aria-hidden="true"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+          <span class="btn-label">See Posts</span>
+        </button>
+      </div>
+
+      <!-- Quick Access -->
+      <div class="card">
+        <h2>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="4" y="13" width="3.4" height="7" />
+            <rect x="10.3" y="8" width="3.4" height="12" />
+            <rect x="16.6" y="4" width="3.4" height="16" />
+          </svg>
+          Analytics Dashboard
+        </h2>
+
+        <div class="nav-buttons">
+          <a href="/trending">
+            <button type="button" class="tile">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="3,17 9,11 13,15 21,7" />
+                <polyline points="21,7 21,13" />
+                <polyline points="21,7 15,7" />
+              </svg>
+              Trending Hashtags
+            </button>
+          </a>
+
+          <a href="/creators">
+            <button type="button" class="tile">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.4" />
+                <path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2" />
+              </svg>
+              Popular Creators
+            </button>
+          </a>
+
+          <a href="/statistics">
+            <button type="button" class="tile">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="13" width="3.4" height="7" />
+                <rect x="10.3" y="8" width="3.4" height="12" />
+                <rect x="16.6" y="4" width="3.4" height="16" />
+              </svg>
+              Statistics Dashboard
+            </button>
+          </a>
+
+          <a href="/performance">
+            <button type="button" class="tile">
+              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 16a8 8 0 0 1 16 0" />
+                <line x1="12" y1="16" x2="16" y2="11" />
+                <circle
+                  cx="12"
+                  cy="16"
+                  r="1.1"
+                  style="fill: currentColor; stroke: none"
+                />
+              </svg>
+              Performance Analysis
+            </button>
+          </a>
+        </div>
+      </div>
     </div>
 
-    <script>
-
-        function goToFilter() {
-
-            const selected =
-                document.getElementById(
-                    "filterSelect"
-                ).value;
-
-            if (selected !== "") {
-
-                window.location.href =
-                    selected;
-
-            }
-            else {
-
-                alert(
-                    "Please select a filter first."
-                );
-
-            }
-        }
-
-    </script>
-
-</body>
-
+    <script src="{{ url_for('static', filename='theme.js') }}" defer></script>
+  </body>
 </html>

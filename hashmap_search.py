@@ -19,11 +19,16 @@ def build_hashtag_index(posts):
 
     for post in posts:
 
-        hashtags = post.hashtags.split(",")
+        # Replace commas with spaces, then split by any whitespace
+        hashtags = post.hashtags.replace(",", " ").split()
 
         for tag in hashtags:
 
             tag = tag.lower().strip()
+            
+            # Skip empty strings
+            if not tag:
+                continue
 
             if tag not in hashtag_index:
                 hashtag_index[tag] = []

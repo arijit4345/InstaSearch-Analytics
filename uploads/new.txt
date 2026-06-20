@@ -1,0 +1,15 @@
+Post_ID|Creator|Hashtags|Caption|Likes|Comments|Shares|Date
+P00001|creator_173|#Challenge #Viral #Comedy #Education|What do you think?|237064|45122|25585|2024-02-27
+P00002|creator_1|#Technology #Music|Top tips and tricks|273730|40966|22486|2024-06-20
+P00003|creator_196|#Music #Comedy #Food #AI|My daily routine|214615|48424|11260|2025-05-05
+P00004|creator_55|#Viral #Travel #Comedy #Sports|Check this out|167067|41810|15853|2024-11-26
+P00005|creator_87|#AI|What do you think?|441455|22757|26896|2024-08-03
+P00006|creator_43|#Viral #Challenge #Dance #Gaming|Amazing content today|118281|45510|6303|2024-11-07
+P00007|creator_52|#Challenge #Travel #Photography #Viral|What do you think?|4039|6900|609|2024-02-19
+P00008|creator_194|#Gaming #Challenge #Dance|What do you think?|8051|6327|22724|2025-11-30
+P00009|creator_46|#Gaming #AI #Sports #Challenge|New update just dropped|224668|20845|25627|2024-12-01
+P00010|creator_77|#Comedy #Challenge #Viral|My daily routine|294742|13563|10467|2024-01-24
+P00011|creator_55|#Technology #Comedy|My daily routine|200663|47363|8270|2024-05-27
+P00012|creator_96|#Dance #Photography|What do you think?|229485|32614|454|2025-11-16
+P00013|creator_15|#Viral|Life lately|220129|4041|23249|2025-10-06
+P00014|creator_176|#Sports|Check this out|120506|46912|1789|2025-06-16
