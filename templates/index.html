@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,103 +8,155 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
-    <header>
+    <div class="container">
+
         <h1>Instagram Content Discovery System</h1>
-        <p>Search and analyze Instagram posts</p>
-    </header>
 
-    <section class="card">
+        <!-- Upload Dataset -->
 
-    <h2>Quick Access</h2>
+        <div class="card">
 
-    <div class="nav-buttons">
+            <h2>Upload Dataset</h2>
 
-        <a href="/trending">
-            <button>Trending Hashtags</button>
-        </a>
+            <form action="/upload"
+                  method="POST"
+                  enctype="multipart/form-data">
 
-        <a href="/creators">
-            <button>Popular Creators</button>
-        </a>
+                <input type="file"
+                       name="dataset"
+                       accept=".txt"
+                       required>
 
-        <a href="/statistics">
-            <button>Statistics Dashboard</button>
-        </a>
+                <button type="submit">
+                    Upload File
+                </button>
 
-        <a href="/performance">
-            <button>Performance Analysis</button>
-        </a>
+            </form>
 
-        <a href="/recent">
-            <button>Recent Posts</button>
-        </a>
+        </div>
+
+        <!-- Search -->
+
+        <div class="card">
+
+            <h2>Search Posts</h2>
+
+            <form action="/search"
+                  method="POST">
+
+                <input type="text"
+                       name="keyword"
+                       placeholder="Enter keyword, hashtag, creator..."
+                       required>
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Filters -->
+
+        <div class="card">
+
+            <h2>Filter Posts</h2>
+
+            <select id="filterSelect">
+
+                <option value="">
+                    Select Filter
+                </option>
+
+                <option value="/sort/likes">
+                    Popularity (Likes)
+                </option>
+
+                <option value="/sort/engagement">
+                    Engagement
+                </option>
+
+                <option value="/recent">
+                    Recent Posts
+                </option>
+
+            </select>
+
+            <button type="button"
+                    onclick="goToFilter()">
+                See Posts
+            </button>
+
+        </div>
+
+        <!-- Quick Access -->
+
+        <div class="card">
+
+            <h2>Analytics Dashboard</h2>
+
+            <div class="nav-buttons">
+
+                <a href="/trending">
+                    <button>
+                        Trending Hashtags
+                    </button>
+                </a>
+
+                <a href="/creators">
+                    <button>
+                        Popular Creators
+                    </button>
+                </a>
+
+                <a href="/statistics">
+                    <button>
+                        Statistics Dashboard
+                    </button>
+                </a>
+
+                <a href="/performance">
+                    <button>
+                        Performance Analysis
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
-</section>
+    <script>
 
-    <main>
+        function goToFilter() {
 
-        <!-- Dataset Upload -->
-        <section class="card">
-            <h2>Upload Dataset</h2>
+            const selected =
+                document.getElementById(
+                    "filterSelect"
+                ).value;
 
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" name="dataset" accept=".txt" required>
-                <button type="submit">Upload File</button>
-            </form>
-        </section>
+            if (selected !== "") {
 
-        <!-- Search Section -->
-        <section class="card">
-            <h2>Search Posts</h2>
+                window.location.href =
+                    selected;
 
-            <form action="/search" method="POST">
+            }
+            else {
 
-                <input
-                    type="text"
-                    name="query"
-                    placeholder="Enter keyword, hashtag or creator"
-                    required
-                >
+                alert(
+                    "Please select a filter first."
+                );
 
-                <button type="submit">Search</button>
+            }
+        }
 
-            </form>
-        </section>
-
-        <!-- Filters -->
-        <section class="card">
-            <h2>Filters</h2>
-
-            <select name="sort">
-                <option value="relevance">Relevance</option>
-                <option value="likes">Most Likes</option>
-                <option value="engagement">Highest Engagement</option>
-                <option value="recent">Most Recent</option>
-            </select>
-        </section>
-
-        <!-- Analytics Buttons -->
-        <section class="card">
-            <h2>Analytics</h2>
-
-            <button onclick="window.location.href='/trending'">
-                Trending Hashtags
-            </button>
-
-            <button onclick="window.location.href='/creators'">
-                Popular Creators
-            </button>
-
-            <button onclick="window.location.href='/statistics'">
-                Statistics
-            </button>
-        </section>
-
-    </main>
+    </script>
 
 </body>
+
 </html>

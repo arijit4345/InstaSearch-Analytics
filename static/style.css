@@ -135,3 +135,29 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
+select {
+
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+}
+
+button {
+
+    padding: 10px 15px;
+    background: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+button:hover {
+
+    background: #0077cc;
+
+}

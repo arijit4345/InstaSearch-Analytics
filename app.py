@@ -105,7 +105,7 @@ def statistics():
 @app.route("/search", methods=["POST"])
 def search():
 
-    keyword = request.form["query"]
+    keyword = request.form["keyword"]
 
     results = linear_search(posts, keyword)
 
