@@ -219,17 +219,17 @@
     var options = customSelect.querySelectorAll(".option");
 
     // Toggle dropdown open/close
-    trigger.addEventListener("click", function() {
+    trigger.addEventListener("click", function () {
       customSelect.classList.toggle("is-open");
     });
 
     // Handle option selection
-    options.forEach(function(option) {
-      option.addEventListener("click", function() {
+    options.forEach(function (option) {
+      option.addEventListener("click", function () {
         // Update text and value
         label.textContent = this.textContent;
         hiddenInput.value = this.getAttribute("data-value");
-        
+
         // Add active classes and close menu
         customSelect.classList.add("has-value");
         customSelect.classList.remove("is-open", "is-error");
@@ -237,7 +237,7 @@
     });
 
     // Close dropdown if clicking anywhere outside of it
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function (e) {
       if (!customSelect.contains(e.target)) {
         customSelect.classList.remove("is-open");
       }
@@ -254,12 +254,12 @@
       } else {
         // Reset animation
         customSelect.classList.remove("is-error");
-        void customSelect.offsetWidth; 
-        
+        void customSelect.offsetWidth;
+
         // Shake the custom select wrapper
         customSelect.classList.add("is-error");
-        
-        setTimeout(function() {
+
+        setTimeout(function () {
           customSelect.classList.remove("is-error");
         }, 400);
       }
@@ -304,13 +304,12 @@
     });
   }
 
- /* ---------- search validation logic ---------- */
+  /* ---------- search validation logic ---------- */
   var searchForm = document.getElementById("search-form");
   var searchInput = document.getElementById("keyword-input");
 
   if (searchForm && searchInput) {
     searchForm.addEventListener("submit", function (e) {
-      
       var keyword = searchInput.value.trim();
 
       if (keyword === "") {
@@ -325,13 +324,13 @@
 
         // Reset animation
         searchInput.classList.remove("is-error");
-        void searchInput.offsetWidth; 
-        
+        void searchInput.offsetWidth;
+
         // Apply the red border and shake animation
         searchInput.classList.add("is-error");
-        
+
         // Clean up the class after the 400ms shake animation finishes
-        setTimeout(function() {
+        setTimeout(function () {
           searchInput.classList.remove("is-error");
         }, 400);
       }
@@ -346,4 +345,44 @@
       window.location.reload();
     }
   });
+
+  /* ---------- Bulletproof Filter Button Logic ---------- */
+  var filterBtn = document.getElementById("filter-btn");
+
+  if (filterBtn) {
+    filterBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      // 1. Grab the EXACT hidden input ID from your HTML
+      var filterInput = document.getElementById("filterSelect");
+      var route = filterInput ? filterInput.value : "";
+
+      if (route) {
+        // 2. Valid selection: Turn on the spinner
+        filterBtn.classList.add("is-loading");
+
+        // 3. Wait 50ms so the browser actually shows the spinner,
+        // then navigate using the EXACT route from your data-value attribute.
+        setTimeout(function () {
+          window.location.href = route;
+        }, 50);
+      } else {
+        // 4. Invalid selection: Flash the spinner briefly
+        filterBtn.classList.add("is-loading");
+
+        // Optional: Shake the dropdown box using your existing error class
+        var filterWrapper = document.getElementById("custom-filter-wrapper");
+        if (filterWrapper) {
+          filterWrapper.classList.remove("is-error");
+          void filterWrapper.offsetWidth;
+          filterWrapper.classList.add("is-error");
+        }
+
+        setTimeout(function () {
+          filterBtn.classList.remove("is-loading");
+          if (filterWrapper) filterWrapper.classList.remove("is-error");
+        }, 500);
+      }
+    });
+  }
 })();

@@ -103,7 +103,7 @@
         {% set qs = [] %}
         {% for key, value in request.args.items() %}
           {% if key != 'page' %}
-            {% set _ = qs.append(key ~ '=' ~ value) %}
+            {% set _ = qs.append(key ~ '=' ~ value | urlencode) %}
           {% endif %}
         {% endfor %}
         {% set extra_args = ('&' ~ qs|join('&')) if qs else '' %}

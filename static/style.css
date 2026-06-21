@@ -155,13 +155,13 @@ a {
   gap: 18px;
   padding: 14px 5%;
   background: var(--scrim);
-  
+
   /* Increased the blur for a stronger frosted glass effect */
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  
+
   border-bottom: 1px solid var(--border);
-  
+
   /* Added a soft, fading shadow to create that horizon blur effect */
   box-shadow: 0 4px 24px -6px var(--shadow);
 }
@@ -708,10 +708,10 @@ button.ghost:hover {
   height: 14px;
   /* Use a neutral, faint track that works on both dark and light backgrounds */
   border: 2px solid rgba(150, 150, 150, 0.3);
-  
+
   /* currentColor automatically forces the spinner to match the button's text color! */
   border-top-color: currentColor;
-  
+
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   display: none;
@@ -1217,7 +1217,9 @@ a.page-btn.disabled {
   width: 32px;
   height: 32px;
   color: var(--text-muted);
-  transition: transform 0.3s var(--ease), color 0.3s var(--ease);
+  transition:
+    transform 0.3s var(--ease),
+    color 0.3s var(--ease);
 }
 
 .dropzone .drop-text {
@@ -1267,15 +1269,30 @@ a.page-btn.disabled {
 
 /* Keyframe Animations */
 @keyframes popIn {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
 }
 
 /* ---------------------------------------------------------------------
@@ -1289,7 +1306,8 @@ body {
 }
 
 /* 2. ONLY unlock specific data and the search input box */
-input, .selectable {
+input,
+.selectable {
   -webkit-user-select: text;
   user-select: text;
   cursor: text; /* Show the text cursor when hovering over copyable data */
@@ -1457,7 +1475,9 @@ button.delete-btn:hover {
   color: var(--text);
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.15s var(--ease), color 0.15s var(--ease);
+  transition:
+    background 0.15s var(--ease),
+    color 0.15s var(--ease);
 }
 
 .select-options .option:hover {
@@ -1485,10 +1505,18 @@ button.delete-btn:hover {
 }
 
 /* Layer the cards descending so the top ones always overlap the bottom ones */
-.container .card:nth-of-type(1) { z-index: 40; }
-.container .card:nth-of-type(2) { z-index: 30; }
-.container .card:nth-of-type(3) { z-index: 20; } /* Filter card */
-.container .card:nth-of-type(4) { z-index: 10; } /* Analytics card */
+.container .card:nth-of-type(1) {
+  z-index: 40;
+}
+.container .card:nth-of-type(2) {
+  z-index: 30;
+}
+.container .card:nth-of-type(3) {
+  z-index: 20;
+} /* Filter card */
+.container .card:nth-of-type(4) {
+  z-index: 10;
+} /* Analytics card */
 
 /* Input Error State */
 input[type="text"].is-error {
@@ -1500,6 +1528,6 @@ input[type="text"].is-error {
 /* Changed from var(--coral-soft) to solid coral so it is perfectly readable */
 input[type="text"].is-error::placeholder {
   color: var(--coral);
-  opacity: 1; 
+  opacity: 1;
 }
 

@@ -217,28 +217,50 @@
           </div>
         </form>
 
-        <div id="active-dataset-card" class="dataset-status" {% if not current_file %}style="display: none;"{% endif %}>
+        <div
+          id="active-dataset-card"
+          class="dataset-status"
+          {%
+          if
+          not
+          current_file
+          %}style="display: none;"
+          {%
+          endif
+          %}
+        >
           <div class="status-info">
             <span class="eyebrow">Active Dataset</span>
             <div class="status-details">
-              <svg class="icon stroke-mint" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                class="icon stroke-mint"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
               <span id="current-filename">{{ current_file }}</span>
-              <span id="current-count" class="tag-pill">{{ record_count }} posts</span>
+              <span id="current-count" class="tag-pill"
+                >{{ record_count }} posts</span
+              >
             </div>
           </div>
-          
-          <button type="button" id="delete-dataset-btn" class="btn ghost delete-btn">
+
+          <button
+            type="button"
+            id="delete-dataset-btn"
+            class="btn ghost delete-btn"
+          >
             <span class="spinner" aria-hidden="true"></span>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <path
+                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+              ></path>
             </svg>
             <span class="btn-label">Remove</span>
           </button>
         </div>
-
       </div>
 
       <!-- Search -->
@@ -252,19 +274,27 @@
         </h2>
 
         <form id="search-form" action="/search" method="GET" novalidate>
-          <label class="sr-only" for="keyword-input">Enter keyword, hashtag or creator</label>
+          <label class="sr-only" for="keyword-input"
+            >Enter keyword, hashtag or creator</label
+          >
           <div class="field">
             <input
               type="text"
               id="keyword-input"
               name="keyword"
+              autocomplete="off"
               placeholder="Enter keyword, hashtag, creator..."
               required
             />
           </div>
           <button type="submit">
             <span class="spinner" aria-hidden="true"></span>
-            <svg class="icon" viewBox="0 0 24 24" style="stroke: var(--on-accent)" aria-hidden="true">
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              style="stroke: var(--on-accent)"
+              aria-hidden="true"
+            >
               <circle cx="10" cy="10" r="6.2" />
               <line x1="20" y1="20" x2="14.6" y2="14.6" />
             </svg>
@@ -295,19 +325,24 @@
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </div>
-          
+
           <div class="select-options">
-            <div class="option" data-value="/sort/likes">Popularity (Likes)</div>
+            <div class="option" data-value="/sort/likes">
+              Popularity (Likes)
+            </div>
             <div class="option" data-value="/sort/engagement">Engagement</div>
-            <div class="option" data-value="/sort/shares">Most Shares</div>             <!-- NEW -->
-            <div class="option" data-value="/sort/comments">Most Comments</div>  
+            <div class="option" data-value="/sort/shares">Most Shares</div>
+            <!-- NEW -->
+            <div class="option" data-value="/sort/comments">Most Comments</div>
             <div class="option" data-value="/recent">Recent Posts</div>
           </div>
         </div>
-        
+
         <input type="hidden" id="filterSelect" value="" />
 
         <button type="button" id="filter-btn">
+          <span class="spinner" aria-hidden="true"></span>
+
           <svg
             class="icon"
             viewBox="0 0 24 24"
