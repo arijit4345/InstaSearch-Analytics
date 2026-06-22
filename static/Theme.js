@@ -2,6 +2,15 @@
 (function () {
   "use strict";
 
+  /* ---------- shared helper: flag a field with a red shake ----------
+     Used by every "is-error" state (search box, filter dropdown, filter
+     button) to restart the CSS shake animation on the same element. */
+  function flashError(el) {
+    el.classList.remove("is-error");
+    void el.offsetWidth; // force reflow so the animation can replay
+    el.classList.add("is-error");
+  }
+
   /* ---------- theme toggle ---------- */
   var root = document.documentElement;
   var toggle = document.getElementById("themeToggle");
@@ -252,13 +261,8 @@
       if (selected !== "") {
         window.location.href = selected;
       } else {
-        // Reset animation
-        customSelect.classList.remove("is-error");
-        void customSelect.offsetWidth;
-
-        // Shake the custom select wrapper
-        customSelect.classList.add("is-error");
-
+        // Shake the custom select wrapper to flag the missing selection
+        flashError(customSelect);
         setTimeout(function () {
           customSelect.classList.remove("is-error");
         }, 400);
@@ -316,18 +320,14 @@
         // Prevent the form from actually submitting
         e.preventDefault();
 
-        // QUICK FIX: Find the submit button and instantly stop the spinner
+        // Stop the submit button's spinner since the request never fires
         var submitBtn = searchForm.querySelector('button[type="submit"]');
         if (submitBtn) {
           submitBtn.classList.remove("is-loading");
         }
 
-        // Reset animation
-        searchInput.classList.remove("is-error");
-        void searchInput.offsetWidth;
-
         // Apply the red border and shake animation
-        searchInput.classList.add("is-error");
+        flashError(searchInput);
 
         // Clean up the class after the 400ms shake animation finishes
         setTimeout(function () {
@@ -337,7 +337,7 @@
     });
   }
 
-  /* ---------- Handle Browser Back Button (bfcache) ---------- */
+  /* ---------- handle browser back button (bfcache) ---------- */
   window.addEventListener("pageshow", function (event) {
     // The 'persisted' property is true if the page was loaded from the browser's back/forward cache
     if (event.persisted) {
@@ -346,37 +346,29 @@
     }
   });
 
-  /* ---------- Bulletproof Filter Button Logic ---------- */
-  var filterBtn = document.getElementById("filter-btn");
-
+  /* ---------- filter button: navigate to the selected route ---------- */
   if (filterBtn) {
     filterBtn.addEventListener("click", function (e) {
       e.preventDefault();
 
-      // 1. Grab the EXACT hidden input ID from your HTML
+      // Read the hidden input that stores the selected filter's route
       var filterInput = document.getElementById("filterSelect");
       var route = filterInput ? filterInput.value : "";
 
       if (route) {
-        // 2. Valid selection: Turn on the spinner
+        // Valid selection: show the spinner, then navigate
         filterBtn.classList.add("is-loading");
 
-        // 3. Wait 50ms so the browser actually shows the spinner,
-        // then navigate using the EXACT route from your data-value attribute.
+        // Small delay so the spinner is visible before the page unloads
         setTimeout(function () {
           window.location.href = route;
         }, 50);
       } else {
-        // 4. Invalid selection: Flash the spinner briefly
+        // No selection: flash the spinner and shake the dropdown briefly
         filterBtn.classList.add("is-loading");
 
-        // Optional: Shake the dropdown box using your existing error class
         var filterWrapper = document.getElementById("custom-filter-wrapper");
-        if (filterWrapper) {
-          filterWrapper.classList.remove("is-error");
-          void filterWrapper.offsetWidth;
-          filterWrapper.classList.add("is-error");
-        }
+        if (filterWrapper) flashError(filterWrapper);
 
         setTimeout(function () {
           filterBtn.classList.remove("is-loading");

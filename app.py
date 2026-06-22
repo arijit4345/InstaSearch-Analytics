@@ -2,7 +2,7 @@ import os
 import math
 from flask import Flask, render_template, request, jsonify
 
-# Import custom modules (Linear search retained per your request)
+# Custom modules for loading, searching, sorting and analyzing the dataset
 from data_loader import load_posts
 from search import linear_search
 from sorting import merge_sort, sort_by_date
@@ -62,7 +62,7 @@ else:
 
 def get_paginated_list(results):
     page = request.args.get("page", 1, type=int)
-    per_page = 15 # Change this to 10 or 20 if you prefer
+    per_page = 15  # results per page
 
     total_items = len(results)
     total_pages = math.ceil(total_items / per_page) if total_items > 0 else 1
@@ -74,6 +74,34 @@ def get_paginated_list(results):
     end = start + per_page
 
     return results[start:end], page, total_pages, total_items
+
+
+def render_paginated(template, key, items):
+    """Paginate `items` and render `template` with them passed as `key`.
+
+    Every results/trending/creators route follows the same
+    paginate-then-render shape, so this keeps that logic in one place.
+    """
+    paginated, page, total_pages, total_items = get_paginated_list(items)
+    return render_template(template, page=page, total_pages=total_pages, **{key: paginated})
+
+
+def remove_dataset_file(filename, log_label="Deleted file"):
+    """Remove a dataset file from the uploads folder if it exists."""
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    if os.path.exists(filepath):
+        try:
+            os.remove(filepath)
+            print(f"🗑️ {log_label}: {filename}")
+        except Exception as e:
+            print(f"⚠️ Failed to delete {filename}: {e}")
+
+
+def reset_cache():
+    """Clear the sorted-results cache so the next page view re-sorts."""
+    global cached_sorted_posts, current_sort_criteria
+    cached_sorted_posts = []
+    current_sort_criteria = None
 
 
 # ---------------------------------------------------------------------
@@ -98,8 +126,7 @@ def sort_posts(criteria):
         # If the criteria is the same (they just changed pages), skip the sort entirely!
         print(f"⚡ Using constant-time cached data for: {criteria}")
 
-    paginated, page, total_pages, total_items = get_paginated_list(cached_sorted_posts)
-    return render_template("results.html", results=paginated, page=page, total_pages=total_pages)
+    return render_paginated("results.html", "results", cached_sorted_posts)
 
 @app.route("/recent")
 def recent_posts():
@@ -113,20 +140,17 @@ def recent_posts():
     else:
         print("⚡ Using constant-time cached data for recent posts")
 
-    paginated, page, total_pages, total_items = get_paginated_list(cached_sorted_posts)
-    return render_template("results.html", results=paginated, page=page, total_pages=total_pages)
+    return render_paginated("results.html", "results", cached_sorted_posts)
 
 @app.route("/trending")
 def trending():
     trends = trending_hashtags(posts)
-    paginated, page, total_pages, total_items = get_paginated_list(trends)
-    return render_template("trending.html", trends=paginated, page=page, total_pages=total_pages)
+    return render_paginated("trending.html", "trends", trends)
 
 @app.route("/creators")
 def creators():
     ranked_creators = popular_creators(posts)
-    paginated, page, total_pages, total_items = get_paginated_list(ranked_creators)
-    return render_template("creators.html", creators=paginated, page=page, total_pages=total_pages)
+    return render_paginated("creators.html", "creators", ranked_creators)
 
 @app.route("/statistics")
 def statistics():
@@ -137,14 +161,12 @@ def statistics():
 def search():
     keyword = request.args.get("keyword", "")
     results = linear_search(posts, keyword)
-    paginated, page, total_pages, total_items = get_paginated_list(results)
-    return render_template("results.html", results=paginated, page=page, total_pages=total_pages)
+    return render_paginated("results.html", "results", results)
 
 @app.route("/relevance/<keyword>")
 def relevance(keyword):
     results = relevance_search(posts, keyword)
-    paginated, page, total_pages, total_items = get_paginated_list(results)
-    return render_template("results.html", results=paginated, page=page, total_pages=total_pages)
+    return render_paginated("results.html", "results", results)
 
 
 # ---------------------------------------------------------------------
@@ -153,30 +175,22 @@ def relevance(keyword):
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    global posts, current_filename, cached_sorted_posts, current_sort_criteria
+    global posts, current_filename
 
     file = request.files["dataset"]
 
     if file:
-        # 1. CLEANUP PREVIOUS FILE
+        # Replace any previously loaded dataset on disk
         if current_filename:
-            old_filepath = os.path.join(app.config["UPLOAD_FOLDER"], current_filename)
-            if os.path.exists(old_filepath):
-                try:
-                    os.remove(old_filepath)
-                    print(f"🗑️ Replaced and deleted old file: {current_filename}")
-                except Exception as e:
-                    print(f"⚠️ Failed to delete old file: {e}")
+            remove_dataset_file(current_filename, "Replaced and deleted old file")
 
-        # 2. SAVE THE NEW FILE
+        # Save and load the new file
         filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
         file.save(filepath)
-        
-        # 3. LOAD NEW DATA & RESET CACHE
+
         posts = load_posts(filepath)
         current_filename = file.filename
-        cached_sorted_posts = []       # Reset cache so new data shows up
-        current_sort_criteria = None   # Reset cache criteria
+        reset_cache()  # new data means cached sort results are stale
 
         return jsonify({
             "message": "Dataset Loaded Successfully!",
@@ -188,23 +202,15 @@ def upload():
 
 @app.route("/delete", methods=["POST"])
 def delete_dataset():
-    global posts, current_filename, cached_sorted_posts, current_sort_criteria
+    global posts, current_filename
 
-    # 1. Physically delete the active file from the server's hard drive
+    # Remove the active file from disk, then wipe it from memory and cache
     if current_filename:
-        filepath = os.path.join(app.config["UPLOAD_FOLDER"], current_filename)
-        if os.path.exists(filepath):
-            try:
-                os.remove(filepath)
-                print(f"🗑️ Physically deleted file from storage: {current_filename}")
-            except Exception as e:
-                print(f"⚠️ Failed to physically delete file: {e}")
+        remove_dataset_file(current_filename, "Physically deleted file from storage")
 
-    # 2. Wipe the application memory & caches entirely
     posts = []
     current_filename = None
-    cached_sorted_posts = []       # Clear the cache!
-    current_sort_criteria = None   # Clear the cache!
+    reset_cache()
 
     return jsonify({"message": "Dataset cleared from memory and storage."})
 

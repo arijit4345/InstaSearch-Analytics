@@ -148,7 +148,7 @@ a {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 100; /* Bumped up to always beat the cards below */
+  z-index: 100; /* stays above the cards below */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -156,13 +156,13 @@ a {
   padding: 14px 5%;
   background: var(--scrim);
 
-  /* Increased the blur for a stronger frosted glass effect */
+  /* frosted glass effect */
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 
   border-bottom: 1px solid var(--border);
 
-  /* Added a soft, fading shadow to create that horizon blur effect */
+  /* soft, fading shadow along the bottom edge */
   box-shadow: 0 4px 24px -6px var(--shadow);
 }
 
@@ -1299,18 +1299,18 @@ a.page-btn.disabled {
    UI/UX Enhancements
    --------------------------------------------------------------------- */
 
-/* 1. Lock down the entire website by default */
+/* Disable text selection site-wide by default */
 body {
   -webkit-user-select: none;
   user-select: none;
 }
 
-/* 2. ONLY unlock specific data and the search input box */
+/* Re-enable selection only on inputs and explicitly copyable data */
 input,
 .selectable {
   -webkit-user-select: text;
   user-select: text;
-  cursor: text; /* Show the text cursor when hovering over copyable data */
+  cursor: text; /* show the text cursor when hovering over copyable data */
 }
 
 /* Dim the "Select Filter" placeholder text */
@@ -1324,29 +1324,24 @@ select option {
   background: var(--surface);
 }
 
-/* Error state: turn red and shake */
-select.is-error {
-  border-color: var(--coral) !important;
-  color: var(--coral);
-  animation: shake 0.4s ease-in-out;
-}
+/* Error state shared with .custom-select and input[type="text"]; see below */
 
 /* ---------------------------------------------------------------------
    Custom Text Selection Color
    --------------------------------------------------------------------- */
 ::selection {
   background: var(--coral);
-  color: #ffffff; /* Forces the highlighted text to be white for contrast */
+  color: #ffffff; /* force white text for contrast against coral */
 }
 
-/* For full browser compatibility (Firefox) */
+/* Firefox */
 ::-moz-selection {
   background: var(--coral);
   color: #ffffff;
 }
 
-/* Optional: You can make the search input use the softer mint color 
-   so it visually separates from the data table selection */
+/* The search input uses mint instead, so its selection is visually
+   distinct from selections made in the data table */
 input::selection {
   background: var(--mint);
   color: #ffffff;
@@ -1490,8 +1485,12 @@ button.delete-btn:hover {
   color: var(--text);
 }
 
-/* Error state logic */
-.custom-select.is-error .select-trigger {
+/* Shared error state for the native select, custom dropdown, and text
+   inputs: red border + shake. Kept in one place since all three apply
+   the exact same treatment. */
+select.is-error,
+.custom-select.is-error .select-trigger,
+input[type="text"].is-error {
   border-color: var(--coral) !important;
   color: var(--coral);
   animation: shake 0.4s ease-in-out;
@@ -1518,16 +1517,22 @@ button.delete-btn:hover {
   z-index: 10;
 } /* Analytics card */
 
-/* Input Error State */
-input[type="text"].is-error {
-  border-color: var(--coral) !important;
-  color: var(--coral);
-  animation: shake 0.4s ease-in-out;
-}
-
-/* Changed from var(--coral-soft) to solid coral so it is perfectly readable */
+/* Placeholder stays solid coral (not coral-soft) for readability against the input background */
 input[type="text"].is-error::placeholder {
   color: var(--coral);
   opacity: 1;
 }
 
+/* Styling for clickable hashtags and creators */
+.interactive-link {
+    color: inherit; /* Keeps your original text color */
+    text-decoration: none; /* Removes the default underline */
+    transition: color 0.2s ease, opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.interactive-link:hover {
+    color: var(--accent-color, #ff5a48); /* Uses your theme's accent color */
+    text-decoration: underline;
+    opacity: 0.8;
+}

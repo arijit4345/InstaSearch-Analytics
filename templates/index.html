@@ -11,32 +11,56 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+
+    <!-- Page-specific styling for the hero section only -->
+    <style>
+      .hero-heading {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(2rem, 4vw, 2.9rem);
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .hero-lead {
+        margin-top: 14px;
+        color: var(--text-muted);
+        max-width: 46ch;
+        font-size: 1rem;
+      }
+    </style>
   </head>
   <body>
     {% include '_topbar.html' %}
 
+    {# Icons reused more than once below, so each lives in one place #}
+    {% macro icon_upload(extra_class='') -%}
+    <svg class="icon{{ ' ' + extra_class if extra_class }}" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4v9" />
+      <path d="M7 8l5-5 5 5" />
+      <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
+    </svg>
+    {%- endmacro %}
+
+    {% macro icon_search(extra_class='') -%}
+    <svg class="icon{{ ' ' + extra_class if extra_class }}" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="10" cy="10" r="6.2" />
+      <line x1="20" y1="20" x2="14.6" y2="14.6" />
+    </svg>
+    {%- endmacro %}
+
+    {% macro icon_bar_chart(extra_class='') -%}
+    <svg class="icon{{ ' ' + extra_class if extra_class }}" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="4" y="13" width="3.4" height="7" />
+      <rect x="10.3" y="8" width="3.4" height="12" />
+      <rect x="16.6" y="4" width="3.4" height="16" />
+    </svg>
+    {%- endmacro %}
+
     <section class="hero">
       <div>
         <span class="eyebrow">live dataset scan</span>
-        <h1
-          style="
-            font-family: var(--display);
-            font-weight: 700;
-            font-size: clamp(2rem, 4vw, 2.9rem);
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-          "
-        >
-          Instagram Content<br />Discovery System
-        </h1>
-        <p
-          style="
-            margin-top: 14px;
-            color: var(--text-muted);
-            max-width: 46ch;
-            font-size: 1rem;
-          "
-        >
+        <h1 class="hero-heading">Instagram Content<br />Discovery System</h1>
+        <p class="hero-lead">
           Upload a dataset, search by keyword, creator or hashtag, and read back
           likes, comments, shares and engagement — ranked the way you want it.
         </p>
@@ -176,11 +200,7 @@
       <!-- Upload Dataset -->
       <div class="card">
         <h2>
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 4v9" />
-            <path d="M7 8l5-5 5 5" />
-            <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
-          </svg>
+          {{ icon_upload() }}
           Upload Dataset
         </h2>
 
@@ -195,11 +215,7 @@
           >
 
           <div class="dropzone" id="dataset-dropzone">
-            <svg class="icon drop-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 4v9" />
-              <path d="M7 8l5-5 5 5" />
-              <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
-            </svg>
+            {{ icon_upload('drop-icon') }}
             <p class="drop-text">
               Drag & drop your <strong>.txt</strong> dataset here, or
             </p>
@@ -220,14 +236,7 @@
         <div
           id="active-dataset-card"
           class="dataset-status"
-          {%
-          if
-          not
-          current_file
-          %}style="display: none;"
-          {%
-          endif
-          %}
+          {% if not current_file %}style="display: none;"{% endif %}
         >
           <div class="status-info">
             <span class="eyebrow">Active Dataset</span>
@@ -266,10 +275,7 @@
       <!-- Search -->
       <div class="card">
         <h2>
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="10" cy="10" r="6.2" />
-            <line x1="20" y1="20" x2="14.6" y2="14.6" />
-          </svg>
+          {{ icon_search() }}
           Search Posts
         </h2>
 
@@ -289,15 +295,7 @@
           </div>
           <button type="submit">
             <span class="spinner" aria-hidden="true"></span>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              style="stroke: var(--on-accent)"
-              aria-hidden="true"
-            >
-              <circle cx="10" cy="10" r="6.2" />
-              <line x1="20" y1="20" x2="14.6" y2="14.6" />
-            </svg>
+            {{ icon_search() }}
             <span class="btn-label">Search</span>
           </button>
         </form>
@@ -332,7 +330,6 @@
             </div>
             <div class="option" data-value="/sort/engagement">Engagement</div>
             <div class="option" data-value="/sort/shares">Most Shares</div>
-            <!-- NEW -->
             <div class="option" data-value="/sort/comments">Most Comments</div>
             <div class="option" data-value="/recent">Recent Posts</div>
           </div>
@@ -343,12 +340,7 @@
         <button type="button" id="filter-btn">
           <span class="spinner" aria-hidden="true"></span>
 
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-            style="stroke: var(--on-accent)"
-            aria-hidden="true"
-          >
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12" />
             <polyline points="12 5 19 12 12 19" />
           </svg>
@@ -359,11 +351,7 @@
       <!-- Quick Access -->
       <div class="card">
         <h2>
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="4" y="13" width="3.4" height="7" />
-            <rect x="10.3" y="8" width="3.4" height="12" />
-            <rect x="16.6" y="4" width="3.4" height="16" />
-          </svg>
+          {{ icon_bar_chart() }}
           Analytics Dashboard
         </h2>
 
@@ -391,11 +379,7 @@
 
           <a href="/statistics">
             <button type="button" class="tile">
-              <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="4" y="13" width="3.4" height="7" />
-                <rect x="10.3" y="8" width="3.4" height="12" />
-                <rect x="16.6" y="4" width="3.4" height="16" />
-              </svg>
+              {{ icon_bar_chart('icon-lg') }}
               Statistics Dashboard
             </button>
           </a>
