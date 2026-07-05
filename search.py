@@ -9,7 +9,7 @@ def linear_search(posts, search_query):
     
     for token in tokens:
         if token.startswith("@") and not target_creator:
-            target_creator = token[1:].lower() # Take the first @ user
+            target_creator = token[1:].replace("_", " ").lower() # Take the first @ user
         elif token.startswith("#"):
             target_hashtags.append(token[1:].lower())
         else:
