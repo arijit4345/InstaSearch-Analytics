@@ -22,6 +22,54 @@
     </div>
 
     <main>
+      <div class="results-toolbar">
+        <div class="active-search-badge">
+          {% if current_search %}
+            <span class="eyebrow" style="margin:0;">Searching:</span>
+            <span class="tag-pill">{{ current_search }}</span>
+            <a href="/explore?sort={{ current_sort }}&order={{ current_order }}" class="clear-search" title="Clear Search">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </a>
+          {% else %}
+            <span class="eyebrow" style="margin:0;">Viewing All Data</span>
+            <span class="result-count">{{ total_items }} records</span>
+          {% endif %}
+        </div>
+
+        <div class="sort-controls">
+          <div class="custom-select" id="custom-sort-dropdown">
+            <input type="hidden" id="results-sort" value="{{ current_sort }}">
+            
+            <div class="select-trigger" tabindex="0">
+              <span class="select-label">
+                {% if current_sort == 'likes' %}Likes
+                {% elif current_sort == 'comments' %}Comments
+                {% elif current_sort == 'shares' %}Shares
+                {% elif current_sort == 'engagement' %}Engagement
+                {% else %}Date{% endif %}
+              </span>
+              <svg class="icon chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            
+            <div class="select-options">
+              <div class="option" data-value="date">Date</div>
+              <div class="option" data-value="likes">Likes</div>
+              <div class="option" data-value="comments">Comments</div>
+              <div class="option" data-value="shares">Shares</div>
+              <div class="option" data-value="engagement">Engagement</div>
+            </div>
+          </div>
+
+          <button id="results-order-btn" class="toolbar-btn" data-order="{{ current_order }}" title="Toggle Ascending/Descending">
+            {% if current_order == 'asc' %}
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            {% else %}
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            {% endif %}
+          </button>
+        </div>
+      </div>
+
       {% if results %}
       <div class="table-wrap">
         <table>
@@ -38,7 +86,6 @@
               <th>Date</th>
             </tr>
           </thead>
-
           <tbody>
             {% for post in results %}
             <tr>
@@ -58,48 +105,18 @@
       </div>
       {% else %}
       <div class="empty-state">
-        <svg
-          viewBox="0 0 120 120"
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-hidden="true"
-        >
-          <circle
-            cx="50"
-            cy="50"
-            r="28"
-            class="stroke-muted fill-none"
-            stroke-width="2"
-            stroke-dasharray="3 6"
-          />
-          <line
-            x1="70"
-            y1="70"
-            x2="92"
-            y2="92"
-            class="stroke-muted"
-            stroke-width="3"
-            stroke-linecap="round"
-          />
-          <line
-            x1="40"
-            y1="50"
-            x2="60"
-            y2="50"
-            class="stroke-coral"
-            stroke-width="2.4"
-            stroke-linecap="round"
-          />
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <circle cx="50" cy="50" r="28" class="stroke-muted fill-none" stroke-width="2" stroke-dasharray="3 6"/>
+          <line x1="70" y1="70" x2="92" y2="92" class="stroke-muted" stroke-width="3" stroke-linecap="round"/>
+          <line x1="40" y1="50" x2="60" y2="50" class="stroke-coral" stroke-width="2.4" stroke-linecap="round"/>
         </svg>
         <h3>No results found</h3>
-        <p>Try a different keyword, hashtag or creator name.</p>
+        <p>Try clearing your search filters to see more data.</p>
       </div>
       {% endif %}
 
-
       {% if total_pages > 1 %}
       <div class="pagination">
-
         {% set qs = [] %}
         {% for key, value in request.args.items() %}
           {% if key != 'page' %}
@@ -110,35 +127,15 @@
 
         {% set start = page - 2 %}
         {% set end = page + 2 %}
-        
-        {% if start < 1 %}
-          {% set end = end + (1 - start) %}
-          {% set start = 1 %}
-        {% endif %}
-        
-        {% if end > total_pages %}
-          {% set start = start - (end - total_pages) %}
-          {% set end = total_pages %}
-          {% if start < 1 %}
-             {% set start = 1 %}
-          {% endif %}
-        {% endif %}
+        {% if start < 1 %}{% set end = end + (1 - start) %}{% set start = 1 %}{% endif %}
+        {% if end > total_pages %}{% set start = start - (end - total_pages) %}{% set end = total_pages %}{% if start < 1 %}{% set start = 1 %}{% endif %}{% endif %}
 
-        <a class="page-btn icon-only {% if page == 1 %}disabled{% endif %}" 
-           {% if page != 1 %}href="{{ request.path }}?page=1{{ extra_args }}"{% endif %} title="First Page">
-          <svg class="icon" viewBox="0 0 24 24">
-            <polyline points="11 17 6 12 11 7"/>
-            <polyline points="18 17 13 12 18 7"/>
-          </svg>
+        <a class="page-btn icon-only {% if page == 1 %}disabled{% endif %}" {% if page != 1 %}href="{{ request.path }}?page=1{{ extra_args }}"{% endif %} title="First Page">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
         </a>
-
-        <a class="page-btn icon-only {% if page == 1 %}disabled{% endif %}" 
-           {% if page != 1 %}href="{{ request.path }}?page={{ page - 1 }}{{ extra_args }}"{% endif %} title="Previous Page">
-          <svg class="icon" viewBox="0 0 24 24">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
+        <a class="page-btn icon-only {% if page == 1 %}disabled{% endif %}" {% if page != 1 %}href="{{ request.path }}?page={{ page - 1 }}{{ extra_args }}"{% endif %} title="Previous Page">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>
         </a>
-
         {% for p in range(start, end + 1) %}
           {% if p == page %}
             <span class="page-btn active">{{ p }}</span>
@@ -146,22 +143,12 @@
             <a class="page-btn" href="{{ request.path }}?page={{ p }}{{ extra_args }}">{{ p }}</a>
           {% endif %}
         {% endfor %}
-
-        <a class="page-btn icon-only {% if page == total_pages %}disabled{% endif %}" 
-           {% if page != total_pages %}href="{{ request.path }}?page={{ page + 1 }}{{ extra_args }}"{% endif %} title="Next Page">
-          <svg class="icon" viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+        <a class="page-btn icon-only {% if page == total_pages %}disabled{% endif %}" {% if page != total_pages %}href="{{ request.path }}?page={{ page + 1 }}{{ extra_args }}"{% endif %} title="Next Page">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" /></svg>
         </a>
-
-        <a class="page-btn icon-only {% if page == total_pages %}disabled{% endif %}" 
-           {% if page != total_pages %}href="{{ request.path }}?page={{ total_pages }}{{ extra_args }}"{% endif %} title="Last Page">
-          <svg class="icon" viewBox="0 0 24 24">
-            <polyline points="13 17 18 12 13 7"/>
-            <polyline points="6 17 11 12 6 7"/>
-          </svg>
+        <a class="page-btn icon-only {% if page == total_pages %}disabled{% endif %}" {% if page != total_pages %}href="{{ request.path }}?page={{ total_pages }}{{ extra_args }}"{% endif %} title="Last Page">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
         </a>
-
       </div>
       {% endif %}
 

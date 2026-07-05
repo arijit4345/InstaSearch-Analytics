@@ -44,6 +44,21 @@
   </div>
 
   <div class="topbar-right">
+    <form class="topbar-search" id="topbar-search-form" action="/explore" method="GET" autocomplete="off">
+      <svg class="icon search-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="10" cy="10" r="6.2" />
+        <line x1="20" y1="20" x2="14.6" y2="14.6" />
+      </svg>
+      <input type="text" name="search" placeholder="Search dataset..." required>
+      
+      <button type="submit" class="search-submit" aria-label="Submit search">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </button>
+    </form>
+
     <button
       class="theme-toggle"
       id="themeToggle"

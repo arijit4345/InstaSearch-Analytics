@@ -70,6 +70,16 @@
 }
 
 /* ---------------------------------------------------------------------
+   Responsive breakpoints used throughout this file, largest to smallest
+     1080px  content max-width (main/.container, not a breakpoint itself)
+      860px  hero collapses from two columns to one
+      760px  grid-2 collapses to one column; topbar nav labels hide
+      640px  topbar nav drops to its own row under brand + controls
+      600px  topbar search box hides
+      480px  tighter spacing/type for small phones
+   --------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------
    Reset & base
    --------------------------------------------------------------------- */
 * {
@@ -149,9 +159,14 @@ a {
   position: sticky;
   top: 0;
   z-index: 100; /* stays above the cards below */
-  display: flex;
+
+  /* Three-column grid (brand | nav | controls). Replaces the old
+     position:absolute + left:50% centering hack for .topbar-links, which
+     could overlap the brand or the search box — a grid's center column
+     can't overlap its neighbors, at any viewport width. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 18px;
   padding: 14px 5%;
   background: var(--scrim);
@@ -175,6 +190,7 @@ a {
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   white-space: nowrap;
+  justify-self: start;
 }
 
 .brand-mark {
@@ -206,6 +222,9 @@ a {
   flex-wrap: wrap;
   font-size: 0.88rem;
   font-weight: 500;
+
+  /* Centered by the parent grid's middle column — see .topbar above. */
+  justify-self: center;
 }
 
 .topbar-links a {
@@ -240,6 +259,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-self: end;
 }
 
 .theme-toggle {
@@ -313,6 +333,66 @@ a {
   }
   .topbar-links a {
     padding: 8px;
+  }
+}
+
+/* =========================================================
+   MOBILE OVERRIDE: Unified Header
+   ========================================================= */
+@media (max-width: 640px) {
+  /* 1. Establish a clean 2-row grid */
+  .topbar {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "brand links controls"
+      "search search search";
+    row-gap: 14px;
+    column-gap: 8px;
+  }
+
+  .brand {
+    grid-area: brand;
+  }
+  .topbar-right {
+    display: contents;
+  }
+  .theme-toggle {
+    grid-area: controls;
+  }
+
+  /* 2. Group the 4 icons next to the theme toggle */
+  .topbar-links {
+    grid-area: links;
+    justify-self: end;
+    padding-top: 0;
+    border-top: none;
+    gap: 2px;
+  }
+
+  .topbar-links a {
+    padding: 6px;
+  }
+
+  /* 3. Set the invisible container to a fixed max width */
+  .topbar-search {
+    display: flex !important;
+    grid-area: search;
+    justify-self: end;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  /* 4. Force the grey input to permanently fill the container so it never shrinks away from the arrow */
+  .topbar-search input,
+  .topbar-search input:focus {
+    width: 100% !important;
+    font-size: 16px !important;
+    padding-right: 48px !important;
+  }
+
+  /* 5. Keep the arrow safely inside */
+  .search-submit {
+    right: 6px !important;
   }
 }
 
@@ -501,9 +581,9 @@ main .card:nth-of-type(4) {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  padding: 16px 14px;
+  padding: 14px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface-2);
@@ -1195,8 +1275,9 @@ a.page-btn.disabled {
 }
 
 /* ---------------------------------------------------------------------
-   Dropzone
+   Dropzone (State Machine)
    --------------------------------------------------------------------- */
+/* STATE 1: Default / Empty */
 .dropzone {
   position: relative;
   display: flex;
@@ -1204,66 +1285,72 @@ a.page-btn.disabled {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 34px 20px;
-  margin-bottom: 20px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
   border: 2px dashed var(--border-strong);
   border-radius: var(--radius);
   background: var(--surface-2);
   text-align: center;
-  transition: all 0.3s var(--ease);
+  transition: all 0.4s var(--ease);
+  overflow: hidden;
 }
 
-.dropzone .drop-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--text-muted);
-  transition:
-    transform 0.3s var(--ease),
-    color 0.3s var(--ease);
-}
-
-.dropzone .drop-text {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-/* State: Hovering a file over the zone */
-.dropzone.is-dragover {
+/* STATE 2: Dragging a file over (No stretching, just color change) */
+.dropzone.is-dragover,
+.dropzone.is-compact.is-dragover {
   border-color: var(--mint);
   background: var(--mint-soft);
 }
 
-.dropzone.is-dragover .drop-icon {
-  transform: translateY(-6px) scale(1.1);
-  color: var(--mint);
-}
-
-/* State: Valid .txt file dropped */
-.dropzone.is-valid {
+/* STATE 3: Success Notification (Temporary) */
+.dropzone.is-success {
   border-color: var(--mint);
   border-style: solid;
+  background: var(--mint-soft);
+  padding: 14px 20px;
 }
 
-.dropzone.is-valid .drop-icon {
+.dropzone.is-success .drop-icon,
+.dropzone.is-success .drop-text,
+.dropzone.is-success .file-name {
   color: var(--mint);
   animation: popIn 0.4s var(--ease) forwards;
 }
 
-.dropzone.is-valid .drop-text {
-  color: var(--mint);
-  font-weight: 500;
+/* STATE 4: Compact / Resting (Dataset is actively loaded) */
+.dropzone.is-compact {
+  border: 1px dashed var(--border-strong);
+  background: var(--surface-2);
+  padding: 12px 16px;
+  flex-direction: row;
 }
 
-/* State: Invalid file format dropped */
+/* Hide all the redundant UI inside the compact dropzone */
+.dropzone.is-compact .drop-icon,
+.dropzone.is-compact .drop-text,
+.dropzone.is-compact .file-name {
+  display: none;
+}
+
+/* Stretch the browse button to fill the space cleanly */
+.dropzone.is-compact .file-label {
+  width: 100%;
+  justify-content: center;
+  margin: 0;
+  background: var(--surface);
+}
+
+/* Error State */
 .dropzone.is-invalid {
   border-color: var(--coral);
   background: var(--coral-soft);
+  padding: 14px 20px;
   border-style: solid;
   animation: shake 0.4s ease-in-out;
 }
-
 .dropzone.is-invalid .drop-icon,
-.dropzone.is-invalid .drop-text {
+.dropzone.is-invalid .drop-text,
+.dropzone.is-invalid .file-name {
   color: var(--coral);
 }
 
@@ -1525,14 +1612,317 @@ input[type="text"].is-error::placeholder {
 
 /* Styling for clickable hashtags and creators */
 .interactive-link {
-    color: inherit; /* Keeps your original text color */
-    text-decoration: none; /* Removes the default underline */
-    transition: color 0.2s ease, opacity 0.2s ease;
-    cursor: pointer;
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+  cursor: pointer;
 }
 
 .interactive-link:hover {
-    color: var(--accent-color, #ff5a48); /* Uses your theme's accent color */
-    text-decoration: underline;
-    opacity: 0.8;
+  color: var(--coral);
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------
+   NEW: Topbar Search & Results Toolbar
+   --------------------------------------------------------------------- */
+.topbar-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.topbar-search input {
+  width: 220px;
+  padding: 8px 40px 8px 34px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 0.88rem;
+  transition: all 0.25s var(--ease);
+}
+
+.topbar-search input:focus {
+  width: 280px;
+  outline: none;
+  background: var(--surface);
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px var(--coral-soft);
+}
+
+.topbar-search .search-icon {
+  position: absolute;
+  left: 10px;
+  width: 15px;
+  height: 15px;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color 0.25s var(--ease);
+}
+
+/* FIX: .search-icon is the input's *preceding* sibling in the markup, so
+   the old "input:focus + .search-icon" rule could never match — the `+`
+   combinator only selects an element that comes right after the one
+   matched. :focus-within on the form fixes that, and also keeps the
+   icon colored while focus is briefly on the arrow button (see below). */
+.topbar-search:focus-within .search-icon {
+  color: var(--coral);
+}
+
+/* Results Page Toolbar */
+.results-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.active-search-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.active-search-badge .result-count {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.clear-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  transition: all 0.2s var(--ease);
+}
+
+.clear-search:hover {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.clear-search .icon {
+  width: 12px;
+  height: 12px;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-select {
+  padding: 7px 12px;
+  font-size: 0.88rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.toolbar-btn:hover {
+  background: var(--coral-soft);
+  color: var(--coral);
+  border-color: var(--coral);
+}
+
+.toolbar-btn .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* NEW: Dynamic Search Submit Arrow */
+.search-submit {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+
+  /* Start hidden and slightly shrunk */
+  transform: translateY(-50%) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background: var(--coral);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  padding: 0;
+}
+
+/* STATE 1: Visible (triggered by JavaScript when text exists) */
+.search-submit.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1);
+}
+
+/* STATE 2: Wide Pill Shape (triggered automatically by CSS when input is focused)
+   FIX: was "input:focus ~ .search-submit". Clicking the arrow button
+   moves keyboard focus from the input to the button itself, so the old
+   selector stopped matching at the exact moment someone clicked it —
+   the pill snapped back to 28px and the arrow un-stretched right as the
+   form submitted. ":focus-within" on the form stays true the whole time
+   focus is anywhere inside it (input OR button), so the expanded state
+   holds steady through the click instead of glitching. */
+.topbar-search:focus-within .search-submit {
+  width: 48px;
+}
+
+/* 1. Target the internal parts of the SVG arrow */
+.search-submit .icon line,
+.search-submit .icon polyline {
+  transition: transform 0.3s var(--ease);
+  vector-effect: non-scaling-stroke;
+}
+
+/* 2. Lock the tail to its EXACT starting coordinate in the SVG grid (x=5, y=12) */
+.search-submit .icon line {
+  transform-origin: 5px 12px;
+}
+
+/* 3. When focused: Stretch the tail by 40% */
+.topbar-search:focus-within .search-submit .icon line {
+  transform: translateX(-3.5px);
+}
+
+/* 4. When focused: Push the head exactly 5 units to perfectly catch the stretched tail */
+.topbar-search:focus-within .search-submit .icon polyline {
+  transform: translateX(3px);
+}
+
+/* 5. Theme-Aware Color and base icon sizing */
+.search-submit .icon {
+  width: 14px;
+  height: 14px;
+  /* Uses your theme tokens: White in Light Mode, Black in Dark Mode */
+  stroke: var(--on-accent);
+  stroke-width: 2.5;
+  transition: transform 0.3s var(--ease);
+}
+
+/* Hover & Active states */
+.search-submit.is-visible:hover {
+  filter: brightness(1.1);
+}
+
+.search-submit.is-visible:hover .icon {
+  transform: translateX(2px); /* Tiny nudge to the arrow on hover */
+}
+
+.search-submit.is-visible:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* ---------------------------------------------------------------------
+   Responsive: small phones (<=480px)
+   The rest of the file is comfortable down to ~600px; this tightens
+   spacing/typography that's otherwise sized for tablet+ so nothing
+   feels cramped or overflows on a ~360-390px viewport.
+   --------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .page-head {
+    padding: 26px 5% 6px;
+  }
+
+  .hero {
+    padding: 20px 5% 6px;
+    gap: 20px;
+  }
+
+  .card {
+    padding: 18px 16px;
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .results-toolbar {
+    padding: 10px 12px;
+  }
+
+  .dataset-status {
+    padding: 12px;
+  }
+
+  .pagination {
+    gap: 6px;
+  }
+
+  .page-btn {
+    min-width: 34px;
+    height: 34px;
+    font-size: 0.82rem;
+  }
+}
+
+/* =========================================================
+   TOOLBAR DROPDOWN FIXES
+   ========================================================= */
+/* 1. Lock the width so the box stops resizing and text fits */
+.sort-controls .custom-select {
+  margin-bottom: 0; /* Removes the default form spacing */
+  min-width: 145px; /* Wide enough to fit "Engagement" safely */
+}
+
+/* 2. Match the height perfectly to the adjacent button */
+.sort-controls .select-trigger {
+  color: var(--text);
+  height: 34px;
+  padding: 0 12px;
+  font-size: 0.88rem;
+}
+
+/* 3. Sync all hover and active colors to Mint */
+.sort-controls .select-trigger:hover,
+.sort-controls .custom-select.is-open .select-trigger {
+  border-color: var(--coral);
+}
+
+.sort-controls .custom-select.is-open .chevron {
+  color: var(--coral);
+}
+
+.sort-controls .select-options .option:hover {
+  background: var(--coral-soft);
+  color: var(--coral);
 }
