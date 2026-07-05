@@ -48,34 +48,58 @@ def get_paginated_list(results):
 def home():
     return render_template("index.html", current_file=current_filename, record_count=len(posts))
 
-# --- THE NEW MASTER ROUTE ---
 @app.route("/explore", methods=["GET"])
 def explore():
     global cached_sorted_posts, current_explore_state
 
-    # 1. Capture the exact state from the URL
+    # 1. Capture state from URL (Original text string)
     search_query = request.args.get("search", "").strip()
-    sort_by = request.args.get("sort", "date") # Default to recent posts
-    order = request.args.get("order", "desc")  # Default to highest/newest first
+    sort_by = request.args.get("sort", "date")
+    order = request.args.get("order", "desc")
 
-    # 2. Build a unique string to check our cache
+    # 2. Parse the search string into UI Tokens (Chips) exactly how you requested
+    ui_chips = []
+    if search_query:
+        tokens = search_query.split()
+        creator_token = None
+        hashtag_tokens = []
+        text_tokens = []
+        
+        for t in tokens:
+            if t.startswith("@") and not creator_token:
+                creator_token = t
+            elif t.startswith("#"):
+                hashtag_tokens.append(t)
+            else:
+                text_tokens.append(t)
+        
+        # Build the visual list (Creator -> Text -> Hashtags)
+        if creator_token:
+            ui_chips.append({"type": "creator", "label": creator_token, "raw": creator_token})
+        if text_tokens:
+            text_raw = " ".join(text_tokens)
+            ui_chips.append({"type": "text", "label": text_raw, "raw": text_raw})
+        for h in hashtag_tokens:
+            ui_chips.append({"type": "hashtag", "label": h, "raw": h})
+
+    # 3. Build a unique string to check our cache
     state_key = f"{search_query}|{sort_by}|{order}"
 
-    # 3. If the state changed (they searched, sorted, or flipped direction), run the math!
+    # 4. If the state changed, run the math!
     if state_key != current_explore_state or not cached_sorted_posts:
         print(f"🔄 Processing new explore state: {state_key}")
         
         filtered_posts = posts
         
-        # A. Filter by Search first (if any)
+        # A. Filter by the Search logic
         if search_query:
             filtered_posts = linear_search(filtered_posts, search_query)
             
         # B. Sort the remaining results
         if sort_by == "date":
-            filtered_posts = sort_by_date(filtered_posts) # Returns desc naturally
+            filtered_posts = sort_by_date(filtered_posts)
         else:
-            filtered_posts = merge_sort(filtered_posts, sort_by) # Returns desc naturally
+            filtered_posts = merge_sort(filtered_posts, sort_by)
             
         # C. Reverse for Ascending order
         if order == "asc":
@@ -96,6 +120,7 @@ def explore():
         total_pages=total_pages,
         total_items=total_items,
         current_search=search_query,
+        ui_chips=ui_chips,          # Passing the tokens to the frontend
         current_sort=sort_by,
         current_order=order
     )
@@ -158,5 +183,5 @@ def delete_dataset():
     return jsonify({"message": "Dataset cleared from memory and storage."})
 
 if __name__ == "__main__":
-    # Setting host='0.0.0.0' makes the server accessible via your local network IP
+    # Ensure it's broadcasted to your network for phone testing
     app.run(host="0.0.0.0", port=5000, debug=True)

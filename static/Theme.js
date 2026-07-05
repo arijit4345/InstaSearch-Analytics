@@ -382,23 +382,87 @@
     });
   }
 
-  /* ---------- Dynamic Topbar Search Button ---------- */
-  var topbarInput = document.querySelector(
-    "#topbar-search-form input[name='search']",
-  );
-  var topbarSubmitBtn = document.querySelector(
-    "#topbar-search-form .search-submit",
-  );
+  /* ---------- Dynamic Topbar Search Button & Smart Merging ---------- */
+  var topbarSearchForm = document.getElementById("topbar-search-form");
+  var topbarInput = document.querySelector("#topbar-search-form input[name='search']");
+  var topbarSubmitBtn = document.querySelector("#topbar-search-form .search-submit");
 
-  if (topbarInput && topbarSubmitBtn) {
-    // Listen for every keystroke
+  if (topbarSearchForm && topbarInput && topbarSubmitBtn) {
+    
+    // 1. Show/hide the submit arrow based on typing
     topbarInput.addEventListener("input", function () {
-      // .trim() ignores empty spaces. If length > 0, they typed real text!
       if (this.value.trim().length > 0) {
         topbarSubmitBtn.classList.add("is-visible");
       } else {
         topbarSubmitBtn.classList.remove("is-visible");
       }
+    });
+
+    // 2. Intercept the form submission to apply the smart merge rules
+    topbarSearchForm.addEventListener("submit", function (e) {
+      e.preventDefault(); // Stop the default overwrite behavior
+      
+      var rawNewInput = topbarInput.value.trim();
+      if (!rawNewInput) return; 
+
+      // Helper function: Parses a raw string into structured parts
+      function parseQuery(query) {
+        var tokens = query.split(/\s+/);
+        var creator = "";
+        var hashtags = [];
+        var textParts = [];
+        
+        tokens.forEach(function(t) {
+          if (t.startsWith("@") && !creator) creator = t;
+          else if (t.startsWith("#")) hashtags.push(t);
+          else textParts.push(t);
+        });
+        
+        return { creator: creator, hashtags: hashtags, text: textParts.join(" ") };
+      }
+
+      // A. Parse what the user just typed
+      var newSearch = parseQuery(rawNewInput);
+
+      // B. Parse what is currently active in the URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var currentQuery = urlParams.get("search") || "";
+      var oldSearch = parseQuery(currentQuery);
+
+      // C. Apply Your Exact Merge Rules
+      // Rule 1: Creator replaces old if it exists, otherwise keeps old
+      var finalCreator = newSearch.creator ? newSearch.creator : oldSearch.creator;
+      
+      // Rule 2: Text replaces old if it exists, otherwise keeps old
+      var finalText = newSearch.text ? newSearch.text : oldSearch.text;
+      
+      // Rule 3: Hashtags are appended (preventing case-insensitive duplicates)
+      var finalHashtags = oldSearch.hashtags.slice();
+      
+      newSearch.hashtags.forEach(function(h) {
+        // 1. Check if the tag exists by comparing lowercase versions of both
+        var isDuplicate = finalHashtags.some(function(existingTag) {
+          return existingTag.toLowerCase() === h.toLowerCase();
+        });
+        
+        // 2. If it's truly new, add the exact string the user typed (preserving their case)
+        if (!isDuplicate) {
+          finalHashtags.push(h); 
+        }
+      });
+
+      // D. Rebuild the final search string in order: Creator -> Text -> Hashtags
+      var queryArray = [];
+      if (finalCreator) queryArray.push(finalCreator);
+      if (finalText) queryArray.push(finalText);
+      if (finalHashtags.length > 0) queryArray = queryArray.concat(finalHashtags);
+
+      var finalString = queryArray.join(" ").trim();
+
+      // E. Send the combined query to the server
+      urlParams.set("search", finalString);
+      urlParams.delete("page"); // Always reset to page 1 on a new search
+      window.location.href = "/explore?" + urlParams.toString();
     });
   }
 
@@ -443,4 +507,84 @@
       select.classList.remove("is-open");
     });
   });
+
+  /* ---------- Read-only Results Toolbar Chips ---------- */
+  var resultsChipTrack = document.getElementById("results-chip-track");
+  
+  if (resultsChipTrack) {
+    resultsChipTrack.addEventListener("click", function(e) {
+      var closeBtn = e.target.closest(".chip-close");
+      if (closeBtn) {
+        // 1. Visually remove the chip that was clicked
+        var chipToRemove = closeBtn.closest(".search-chip");
+        chipToRemove.remove();
+        
+        // 2. Read the raw text of the remaining chips
+        var remainingChips = [];
+        resultsChipTrack.querySelectorAll(".search-chip").forEach(function(chip) {
+          remainingChips.push(chip.getAttribute("data-raw"));
+        });
+        
+        // 3. Rebuild the search query and submit it
+        var newSearchQuery = remainingChips.join(" ");
+        var urlParams = new URLSearchParams(window.location.search);
+        
+        if (newSearchQuery) {
+          urlParams.set("search", newSearchQuery);
+        } else {
+          urlParams.delete("search"); // Delete parameter entirely if empty
+        }
+        
+        urlParams.delete("page"); // Reset to page 1
+        window.location.href = "/explore?" + urlParams.toString();
+      }
+    });
+  }
+
+  /* ---------- Results Toolbar Scroll Arrows ---------- */
+  var resultsChipTrack = document.getElementById("results-chip-track");
+  var scrollWrapper = document.getElementById("chip-scroll-wrapper");
+  var leftBtn = document.getElementById("scroll-left-btn");
+  var rightBtn = document.getElementById("scroll-right-btn");
+
+  if (resultsChipTrack && scrollWrapper && leftBtn && rightBtn) {
+    
+    function updateScrollArrows() {
+      // Calculate true width vs visible width
+      var maxScroll = resultsChipTrack.scrollWidth - resultsChipTrack.clientWidth;
+      var currentScroll = resultsChipTrack.scrollLeft;
+
+      // Show Left Arrow if we've scrolled past 0
+      if (currentScroll > 0) {
+        leftBtn.classList.add("is-visible");
+      } else {
+        leftBtn.classList.remove("is-visible");
+      }
+
+      // Show Right Arrow if there is more hidden content to the right
+      if (Math.ceil(currentScroll) < maxScroll) {
+        rightBtn.classList.add("is-visible");
+      } else {
+        rightBtn.classList.remove("is-visible");
+      }
+    }
+
+    leftBtn.addEventListener("click", function () {
+      resultsChipTrack.scrollBy({ left: -450, behavior: "smooth" });
+    });
+
+    rightBtn.addEventListener("click", function () {
+      resultsChipTrack.scrollBy({ left: 450, behavior: "smooth" });
+    });
+
+    resultsChipTrack.addEventListener("scroll", updateScrollArrows);
+    window.addEventListener("resize", updateScrollArrows);
+
+    // Automatically check if arrows are needed when a user deletes a chip!
+    var observer = new MutationObserver(updateScrollArrows);
+    observer.observe(resultsChipTrack, { childList: true, subtree: true });
+
+    // Initial check on load
+    setTimeout(updateScrollArrows, 50);
+  }
 })();

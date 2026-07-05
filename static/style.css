@@ -1652,6 +1652,7 @@ input[type="text"].is-error::placeholder {
   background: var(--surface);
   border-color: var(--coral);
   box-shadow: 0 0 0 3px var(--coral-soft);
+  padding-right: 58px;
 }
 
 .topbar-search .search-icon {
@@ -1925,4 +1926,183 @@ input[type="text"].is-error::placeholder {
 .sort-controls .select-options .option:hover {
   background: var(--coral-soft);
   color: var(--coral);
+}
+
+/* =========================================================
+   RESULTS TOOLBAR READ-ONLY CHIPS
+   ========================================================= */
+.chip-track {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hides scrollbar on Firefox */
+}
+.chip-track::-webkit-scrollbar { display: none; } /* Hides scrollbar on Chrome */
+
+.search-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+}
+
+/* Enforcing your exact color rules */
+.search-chip.is-creator { color: var(--amber); background: var(--amber-soft); border-color: transparent; }
+.search-chip.is-hashtag { color: var(--mint); background: var(--mint-soft); border-color: transparent; }
+.search-chip.is-text { color: var(--text); background: var(--surface-2); }
+
+.chip-close {
+  cursor: pointer;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+.chip-close:hover { opacity: 1; color: var(--coral); }
+.chip-close svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; }
+
+/* =========================================================
+   FIX: PREVENT LONG TOKENS & ENABLE SCROLLING
+   ========================================================= */
+
+/* 1. Stop the toolbar from wrapping on desktop */
+.results-toolbar {
+  flex-wrap: nowrap !important; 
+}
+
+/* 2. Protect the sort dropdown from shrinking */
+.sort-controls {
+  flex-shrink: 0;
+}
+
+/* 3. Force the badge container to strictly respect boundaries */
+.active-search-badge {
+  flex: 1 1 0% !important; /* The 0% prevents it from pushing past its container */
+  min-width: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 4. Prevent the "Searching:" label and "X" button from getting crushed */
+.active-search-badge .eyebrow,
+.active-search-badge .clear-search {
+  flex-shrink: 0;
+}
+
+/* 5. The scrolling track */
+.chip-track {
+  flex: 1 1 0%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto !important; /* Forces the horizontal scroll */
+  scrollbar-width: none;
+}
+.chip-track::-webkit-scrollbar { display: none; }
+
+/* 6. The individual chips */
+.search-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  border: 1px solid var(--border);
+  max-width: 240px; 
+  flex-shrink: 0; /* Keeps chips from getting squashed */
+}
+
+.chip-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chip-close {
+  flex-shrink: 0; 
+}
+
+/* 7. Let it wrap cleanly ONLY on small mobile screens */
+@media (max-width: 640px) {
+  .results-toolbar {
+    flex-wrap: wrap !important;
+  }
+  .active-search-badge {
+    flex: 1 1 100% !important; /* Forces the chips to take the full top row on phones */
+  }
+}
+
+/* =========================================================
+   SCROLL ARROWS FOR RESULTS TOOLBAR (FIXED PAGINATION STYLE)
+   ========================================================= */
+.chip-scroll-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.chip-track {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto !important;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  flex: 1 1 0%;
+  min-width: 0;
+}
+.chip-track::-webkit-scrollbar { display: none; }
+
+/* The new fixed buttons (Matches .page-btn from the bottom of the page) */
+.toolbar-scroll-btn {
+  display: none; /* Hidden completely until JS says it's needed */
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  padding: 0;
+}
+
+.toolbar-scroll-btn.is-visible {
+  display: flex; /* Makes the button physically appear next to the track */
+}
+
+/* Coral hover state matching pagination */
+.toolbar-scroll-btn:hover {
+  color: var(--coral);
+  border-color: var(--coral);
+  background: var(--coral-soft);
+}
+
+.toolbar-scroll-btn .icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+/* Mobile Override: Hide them completely to save space */
+@media (max-width: 640px) {
+  .toolbar-scroll-btn {
+    display: none !important;
+  }
 }
