@@ -160,8 +160,7 @@ def upload():
     file = request.files["dataset"]
     if file:
         if current_filename:
-            old_filepath = os.path.join(
-                app.config["UPLOAD_FOLDER"], current_filename)
+            old_filepath = os.path.join(app.config["UPLOAD_FOLDER"], current_filename)
             if os.path.exists(old_filepath):
                 try:
                     os.remove(old_filepath)
@@ -171,7 +170,11 @@ def upload():
         filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
         file.save(filepath)
 
-        posts = load_posts(filepath)
+        try:                          
+            posts = load_posts(filepath)
+        except Exception as e:       
+            return jsonify({"error": f"Dataset parse failed: {str(e)}"}), 400
+
         current_filename = file.filename
         cached_sorted_posts = []
         current_explore_state = None
