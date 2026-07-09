@@ -1,6 +1,8 @@
 import os
 import math
-from flask import Flask, render_template, request, jsonify
+import uuid
+from flask import Flask, render_template, request, jsonify, session
+from werkzeug.utils import secure_filename
 
 from data_loader import load_posts
 from search import linear_search
@@ -11,27 +13,34 @@ from statistics import get_statistics
 from relevance import relevance_search
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "instasearch-dev-session-key")
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-posts = []
-current_filename = None
+datasets_by_session = {}
 
-# Unified Cache for Stateful Explore
-cached_sorted_posts = []
-current_explore_state = None
+def get_session_id():
+    if "dataset_session_id" not in session:
+        session["dataset_session_id"] = uuid.uuid4().hex
+    return session["dataset_session_id"]
 
-existing_files = [f for f in os.listdir(UPLOAD_FOLDER) if f.endswith('.txt')]
-if existing_files:
-    current_filename = existing_files[0]
-    filepath = os.path.join(UPLOAD_FOLDER, current_filename)
-    try:
-        posts = load_posts(filepath)
-        print(f"🎒 Auto-loaded dataset: {current_filename}")
-    except Exception as e:
-        posts = []
-        current_filename = None
+
+def get_dataset_state():
+    session_id = get_session_id()
+    if session_id not in datasets_by_session:
+        datasets_by_session[session_id] = {
+            "posts": [],
+            "filename": None,
+            "cached_sorted_posts": [],
+            "current_explore_state": None,
+        }
+    return datasets_by_session[session_id]
+
+
+def clear_explore_cache(dataset_state):
+    dataset_state["cached_sorted_posts"] = []
+    dataset_state["current_explore_state"] = None
 
 
 def get_paginated_list(results):
@@ -50,12 +59,19 @@ def get_paginated_list(results):
 
 @app.route("/")
 def home():
-    return render_template("index.html", current_file=current_filename, record_count=len(posts))
+    dataset_state = get_dataset_state()
+    posts = dataset_state["posts"]
+    return render_template(
+        "index.html",
+        current_file=dataset_state["filename"],
+        record_count=len(posts)
+    )
 
 
 @app.route("/explore", methods=["GET"])
 def explore():
-    global cached_sorted_posts, current_explore_state
+    dataset_state = get_dataset_state()
+    posts = dataset_state["posts"]
 
     # 1. Capture state from URL (Original text string)
     search_query = request.args.get("search", "").strip()
@@ -92,7 +108,7 @@ def explore():
     state_key = f"{search_query}|{sort_by}|{order}"
 
     # 4. If the state changed, run the math!
-    if state_key != current_explore_state or not cached_sorted_posts:
+    if state_key != dataset_state["current_explore_state"] or not dataset_state["cached_sorted_posts"]:
         print(f"🔄 Processing new explore state: {state_key}")
 
         filtered_posts = posts
@@ -112,13 +128,13 @@ def explore():
             filtered_posts = filtered_posts[::-1]
 
         # Save to memory
-        cached_sorted_posts = filtered_posts
-        current_explore_state = state_key
+        dataset_state["cached_sorted_posts"] = filtered_posts
+        dataset_state["current_explore_state"] = state_key
     else:
         print(f"⚡ Using constant-time cache for: {state_key}")
 
     paginated, page, total_pages, total_items = get_paginated_list(
-        cached_sorted_posts)
+        dataset_state["cached_sorted_posts"])
 
     return render_template(
         "results.html",
@@ -135,6 +151,8 @@ def explore():
 
 @app.route("/trending")
 def trending():
+    dataset_state = get_dataset_state()
+    posts = dataset_state["posts"]
     trends = trending_hashtags(posts)
     paginated, page, total_pages, total_items = get_paginated_list(trends)
     return render_template("trending.html", trends=paginated, page=page, total_pages=total_pages)
@@ -142,6 +160,8 @@ def trending():
 
 @app.route("/creators")
 def creators():
+    dataset_state = get_dataset_state()
+    posts = dataset_state["posts"]
     ranked_creators = popular_creators(posts)
     paginated, page, total_pages, total_items = get_paginated_list(
         ranked_creators)
@@ -150,57 +170,55 @@ def creators():
 
 @app.route("/statistics")
 def statistics():
+    dataset_state = get_dataset_state()
+    posts = dataset_state["posts"]
     stats = get_statistics(posts)
     return render_template("statistics.html", stats=stats)
 
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    global posts, current_filename, cached_sorted_posts, current_explore_state
-    file = request.files["dataset"]
-    if file:
-        if current_filename:
-            old_filepath = os.path.join(app.config["UPLOAD_FOLDER"], current_filename)
-            if os.path.exists(old_filepath):
+    file = request.files.get("dataset")
+    if file and file.filename:
+        original_filename = secure_filename(file.filename)
+        if not original_filename.lower().endswith(".txt"):
+            return jsonify({"error": "Only .txt dataset files are supported."}), 400
+
+        session_id = get_session_id()
+        stored_filename = f"{session_id}_{uuid.uuid4().hex}_{original_filename}"
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], stored_filename)
+
+        try:
+            file.save(filepath)
+            loaded_posts = load_posts(filepath)
+        except Exception as e:
+            return jsonify({"error": f"Dataset parse failed: {str(e)}"}), 400
+        finally:
+            if os.path.exists(filepath):
                 try:
-                    os.remove(old_filepath)
+                    os.remove(filepath)
                 except Exception:
                     pass
 
-        filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
-        file.save(filepath)
-
-        try:                          
-            posts = load_posts(filepath)
-        except Exception as e:       
-            return jsonify({"error": f"Dataset parse failed: {str(e)}"}), 400
-
-        current_filename = file.filename
-        cached_sorted_posts = []
-        current_explore_state = None
+        dataset_state = get_dataset_state()
+        dataset_state["posts"] = loaded_posts
+        dataset_state["filename"] = original_filename
+        clear_explore_cache(dataset_state)
 
         return jsonify({
             "message": "Dataset Loaded Successfully!",
-            "filename": current_filename,
-            "count": len(posts)
+            "filename": dataset_state["filename"],
+            "count": len(dataset_state["posts"])
         })
     return jsonify({"error": "Upload Failed"}), 400
 
 
 @app.route("/delete", methods=["POST"])
 def delete_dataset():
-    global posts, current_filename, cached_sorted_posts, current_explore_state
-    if current_filename:
-        filepath = os.path.join(app.config["UPLOAD_FOLDER"], current_filename)
-        if os.path.exists(filepath):
-            try:
-                os.remove(filepath)
-            except Exception:
-                pass
-    posts = []
-    current_filename = None
-    cached_sorted_posts = []
-    current_explore_state = None
+    dataset_state = get_dataset_state()
+    dataset_state["posts"] = []
+    dataset_state["filename"] = None
+    clear_explore_cache(dataset_state)
     return jsonify({"message": "Dataset cleared from memory and storage."})
 
 
