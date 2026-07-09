@@ -472,10 +472,31 @@ a {
   transform-origin: 240px 180px;
 }
 
+/* =========================================================
+   CONTINUOUS EKG LINE DRAWING 
+   ========================================================= */
+
+@keyframes endlessDraw {
+  0% { 
+    stroke-dashoffset: 360; /* Starts completely hidden */
+  }
+  30% { 
+    stroke-dashoffset: 0; /* Fully drawn */
+  }
+  70% { 
+    stroke-dashoffset: 0; /* Pauses so you can see the whole line */
+  }
+  100% { 
+    stroke-dashoffset: -360; /* Stays hidden until the loop restarts */
+  }
+}
+
 .pulse-draw {
-  stroke-dasharray: 220;
-  stroke-dashoffset: 220;
-  animation: draw 1.6s var(--ease) 0.3s forwards;
+  stroke-dasharray: 360;
+  fill: none; /* Keeps it strictly a line */
+  
+  /* Runs the 4-second loop infinitely */
+  animation: endlessDraw 4s var(--ease) infinite;
 }
 
 @media (max-width: 860px) {
