@@ -1,3 +1,5 @@
 # InstaSearch-Analytics
 
 Develop a web application that assists users in discovering relevant social media content from a large collection of Instagram posts. The application should accept a .txt dataset file containing information about posts, including post ID, creator name, hashtags, captions, number of likes, comments, shares, and posting date. Users should be able to search for content using keywords, hashtags, creator names, or other criteria and explore posts that best match their interests. The application should provide options to filter and organize results based on factors such as popularity, engagement, recency, and relevance. Additionally, users should be able to analyze trending topics, identify popular creators, and view content statistics through an interactive and user-friendly interface.
+
+Link: https://pulse-index.onrender.com
